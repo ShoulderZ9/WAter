@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6ef5b8e6a10e9e404d27f810fd8459e0e0843228f436e72234981f2ca057447c
-size 236
+select
+	sum(l_extendedprice * l_discount) as revenue
+from
+	lineitem
+where
+	l_shipdate >= date '1994-01-01'
+	and l_shipdate < date '1994-01-01' + interval '1' year
+	and l_discount between 0.08 - 0.01 and 0.08 + 0.01
+	and l_quantity < 25;

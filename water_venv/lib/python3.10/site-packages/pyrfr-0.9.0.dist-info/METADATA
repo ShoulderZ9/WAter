@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: pyrfr
+Version: 0.9.0
+Home-page: https://github.com/automl/random_forest_run
+Author: Stefan Falkner, Matthias Feurer, Rene Sass, Eddie Bergman
+Author-email: sfalkner@cs.uni-freiburg.de
+License: BSD-3-Clause
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: BSD License
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+License-File: LICENSE_cereal-1.2.2
+License-File: LICENSE_doxy2swig
+License-File: LICENSE_rapidjson
+License-File: LICENSE_rapidxml
+
+# Pyrfr
+https://github.com/automl/random_forest_run

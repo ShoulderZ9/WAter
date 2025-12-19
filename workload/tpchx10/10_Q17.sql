@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:103dcd8c84c94a9862f1a471b85d1b76c1c98a4ceddeaccc8e117b10256b3ee3
-size 266
+select
+	sum(l_extendedprice) / 7.0 as avg_yearly
+from
+	lineitem,
+	part
+where
+	p_partkey = l_partkey
+	and p_brand = 'Brand#15'
+	and p_container = 'JUMBO BAG'
+	and l_quantity < (
+		select
+			0.2 * avg(l_quantity)
+		from
+			lineitem
+		where
+			l_partkey = p_partkey
+	);

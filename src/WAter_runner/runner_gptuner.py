@@ -41,9 +41,9 @@ class RunnerGPTuner(RunnerTemplate):
         with open(self.cur_tuner.runhistory_path, 'r') as f:
             runhistory_data = json.load(f)["data"]
         self.success_run_last = [k for k, v in self.single_dict["data"].items() if self.timeout not in v.values()]
-        self.success_run_last = sorted(self.success_run_last, key=lambda k: runhistory_data[int(k)-1][4])
+        self.success_run_last = sorted(self.success_run_last, key=lambda k: runhistory_data[int(k)-1]["cost"])
         # configurations perform worse than the default configurations on the current subset are discarded
-        self.exec_whole_last = [config for config in self.success_run_last[:min(int(30*self.verify_ratio), len(self.success_run_last))] if runhistory_data[int(config)-1][4] <= self.subset_default_score * 1.0 * 1000]
+        self.exec_whole_last = [config for config in self.success_run_last[:min(int(30*self.verify_ratio), len(self.success_run_last))] if runhistory_data[int(config)-1]["cost"] <= self.subset_default_score * 1.0 * 1000]
         if str(16) not in self.exec_whole_last:
             self.exec_whole_last.append(str(16))
         print(f"self.exec_whole_last: {self.exec_whole_last}")
@@ -103,6 +103,8 @@ class RunnerGPTuner(RunnerTemplate):
             ###################################
             self.success_run_last = []
             stage_budget = self.success_per_stage
+            # Set subset_default_score for WAter mode to initialize tuner with single data
+            self.cur_tuner.subset_default_score = self.subset_default_score
             smac = self.cur_tuner.optimize(
                 name = f"../optimization_results/{self.dbms.name}/fine/",
                 trials_number=2000) # history trials + new tirals
@@ -112,7 +114,7 @@ class RunnerGPTuner(RunnerTemplate):
                 cost = self.cur_tuner.set_and_replay(config=info.config, seed=info.seed)
                 value = TrialValue(cost=cost, time=time.time()-st)
                 smac.tell(info, value)
-                if cost != self.timeout:
+                if cost != self.timeout * 1000:
                     stage_budget -= 1
                     self.success_run_last.append(str(self.cur_tuner.round))
                 if stage_budget == 0:

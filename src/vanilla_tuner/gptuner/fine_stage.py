@@ -36,20 +36,52 @@ class FineStage(FineSpace):
             with open(self.coarse_path, 'r') as f:
                 his_configs = json.load(f)["configs"]
 
-        query_names = self.workload_queries.keys()
-        with open(self.record_single_path, "r") as json_file:
-            data = json.load(json_file)
-        costs = []
-        for i in range(1, self.round+1):
-            cost = 0
-            if str(i) in data["data"].keys():
-                for name in query_names:
-                    c = data["data"][str(i)][name]
-                    cost += c
-            else:
-                print(f"illegal config round:{i} not in data")
-                cost=1000000
-            costs.append(cost)
+        # Calculate costs based on mode
+        if hasattr(self, 'subset_default_score') and self.subset_default_score is not None:
+            # WAter mode: read from single_dict and calculate costs for current subset
+            with open(self.record_single_path, "r") as json_file:
+                single_data = json.load(json_file)
+            
+            query_names = list(self.workload_queries.keys())
+            # Invalid config cost: 2x default time for this subset (converted to ms)
+            invalid_cost = self.subset_default_score * 2 * 1000
+            costs = []
+            for i in range(1, self.round + 1):
+                config_key = str(i)
+                if config_key in single_data["data"]:
+                    config_data = single_data["data"][config_key]
+                    # Check if all queries in subset exist and are not timeout
+                    valid = True
+                    cost = 0
+                    for query_name in query_names:
+                        if query_name not in config_data:
+                            # Query missing - partial failure
+                            valid = False
+                            break
+                        t = config_data[query_name]
+                        if t >= self.timeout * 1000:
+                            # Query timeout
+                            valid = False
+                            break
+                        cost += t
+                    
+                    if valid:
+                        costs.append(cost)
+                    else:
+                        costs.append(invalid_cost)
+                else:
+                    # Config not in single_dict (deleted due to timeout or illegal)
+                    costs.append(invalid_cost)
+        else:
+            # Vanilla mode: read from coarse_path
+            with open(self.coarse_path, "r") as json_file:
+                coarse_data = json.load(json_file)
+            # Build costs list from coarse runhistory, indexed by config_id
+            costs = [None] * self.round
+            for entry in coarse_data["data"]:
+                config_id = entry["config_id"]
+                if 1 <= config_id <= self.round:
+                    costs[config_id - 1] = entry["cost"]
 
         configs, config_costs = [], []
         for index, value_cost in enumerate(costs):

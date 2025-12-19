@@ -1,3 +1,30 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:607452a0bff72867bdb933209f16745dc7d156ed63402e92a123bf649712441e
-size 457
+select
+	p_brand,
+	p_type,
+	p_size,
+	count(distinct ps_suppkey) as supplier_cnt
+from
+	partsupp,
+	part
+where
+	p_partkey = ps_partkey
+	and p_brand <> 'Brand#21'
+	and p_type not like 'STANDARD PLATED%'
+	and p_size in (27, 18, 26, 37, 25, 40, 16, 39)
+	and ps_suppkey not in (
+		select
+			s_suppkey
+		from
+			supplier
+		where
+			s_comment like '%Customer%Complaints%'
+	)
+group by
+	p_brand,
+	p_type,
+	p_size
+order by
+	supplier_cnt desc,
+	p_brand,
+	p_type,
+	p_size;

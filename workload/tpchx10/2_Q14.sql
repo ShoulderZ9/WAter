@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:efd8f3b44e41e500861b9784271bbbfa54e6bd9b905cc05a3d32a6f31ea0a032
-size 316
+select
+	100.00 * sum(case
+		when p_type like 'PROMO%'
+			then l_extendedprice * (1 - l_discount)
+		else 0
+	end) / sum(l_extendedprice * (1 - l_discount)) as promo_revenue
+from
+	lineitem,
+	part
+where
+	l_partkey = p_partkey
+	and l_shipdate >= date '1993-07-01'
+	and l_shipdate < date '1993-07-01' + interval '1' month;

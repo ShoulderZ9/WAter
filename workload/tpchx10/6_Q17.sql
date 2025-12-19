@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:058716215d6a10701ea8fe40cee50bdcf8b9e2ac2fed2f117c6d1b9734e8c27e
-size 265
+select
+	sum(l_extendedprice) / 7.0 as avg_yearly
+from
+	lineitem,
+	part
+where
+	p_partkey = l_partkey
+	and p_brand = 'Brand#12'
+	and p_container = 'MED CASE'
+	and l_quantity < (
+		select
+			0.2 * avg(l_quantity)
+		from
+			lineitem
+		where
+			l_partkey = p_partkey
+	);

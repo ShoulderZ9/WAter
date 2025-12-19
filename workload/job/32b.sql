@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:50de5c62e6bd85476d6682d9c58c3c6a40a936209f348090ccf3eaa4ac8d98af
-size 394
+SELECT MIN(lt.link) AS link_type, MIN(t1.title) AS first_movie, MIN(t2.title) AS second_movie FROM keyword AS k, link_type AS lt, movie_keyword AS mk, movie_link AS ml, title AS t1, title AS t2 WHERE k.keyword ='character-name-in-title' AND mk.keyword_id = k.id AND t1.id = mk.movie_id AND ml.movie_id = t1.id AND ml.linked_movie_id = t2.id AND lt.id = ml.link_type_id AND mk.movie_id = t1.id;

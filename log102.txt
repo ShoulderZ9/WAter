@@ -1,0 +1,233 @@
+Input arguments: Namespace(seed=102)
+Trying to connect to tpcds1g with user postgres
+Success to connect to tpcds1g with user postgres
+/home/wang7342/WAter
+checkpoint_flush_after
+Defining coarse search space for knob: checkpoint_flush_after
+wal_buffers
+Defining coarse search space for knob: wal_buffers
+backend_flush_after
+Defining coarse search space for knob: backend_flush_after
+wal_writer_flush_after
+Defining coarse search space for knob: wal_writer_flush_after
+wal_writer_delay
+Defining coarse search space for knob: wal_writer_delay
+commit_siblings
+Defining coarse search space for knob: commit_siblings
+commit_delay
+Defining coarse search space for knob: commit_delay
+join_collapse_limit
+Defining coarse search space for knob: join_collapse_limit
+from_collapse_limit
+Defining coarse search space for knob: from_collapse_limit
+bgwriter_flush_after
+Defining coarse search space for knob: bgwriter_flush_after
+deadlock_timeout
+Defining coarse search space for knob: deadlock_timeout
+wal_sync_method
+bgwriter_lru_multiplier
+Defining coarse search space for knob: bgwriter_lru_multiplier
+effective_io_concurrency
+Defining coarse search space for knob: effective_io_concurrency
+max_connections
+Defining coarse search space for knob: max_connections
+max_worker_processes
+Defining coarse search space for knob: max_worker_processes
+max_parallel_workers_per_gather
+Defining coarse search space for knob: max_parallel_workers_per_gather
+max_parallel_workers
+Defining coarse search space for knob: max_parallel_workers
+max_wal_senders
+Defining coarse search space for knob: max_wal_senders
+shared_buffers
+Defining coarse search space for knob: shared_buffers
+huge_pages
+work_mem
+Defining coarse search space for knob: work_mem
+maintenance_work_mem
+Defining coarse search space for knob: maintenance_work_mem
+checkpoint_timeout
+Defining coarse search space for knob: checkpoint_timeout
+checkpoint_completion_target
+Defining coarse search space for knob: checkpoint_completion_target
+min_wal_size
+Defining coarse search space for knob: min_wal_size
+max_wal_size
+Defining coarse search space for knob: max_wal_size
+checkpoint_warning
+Defining coarse search space for knob: checkpoint_warning
+bgwriter_delay
+Defining coarse search space for knob: bgwriter_delay
+bgwriter_lru_maxpages
+Defining coarse search space for knob: bgwriter_lru_maxpages
+vacuum_cost_limit
+Defining coarse search space for knob: vacuum_cost_limit
+autovacuum_max_workers
+Defining coarse search space for knob: autovacuum_max_workers
+autovacuum_vacuum_scale_factor
+Defining coarse search space for knob: autovacuum_vacuum_scale_factor
+autovacuum_analyze_scale_factor
+Defining coarse search space for knob: autovacuum_analyze_scale_factor
+autovacuum_freeze_max_age
+Defining coarse search space for knob: autovacuum_freeze_max_age
+vacuum_cost_delay
+Defining coarse search space for knob: vacuum_cost_delay
+max_replication_slots
+Defining coarse search space for knob: max_replication_slots
+hot_standby_feedback
+max_standby_streaming_delay
+Defining coarse search space for knob: max_standby_streaming_delay
+effective_cache_size
+Defining coarse search space for knob: effective_cache_size
+default_statistics_target
+Defining coarse search space for knob: default_statistics_target
+random_page_cost
+Defining coarse search space for knob: random_page_cost
+archive_mode
+track_activity_query_size
+Defining coarse search space for knob: track_activity_query_size
+/home/wang7342/WAter
+Defining fine search space for knob: checkpoint_flush_after
+Defining fine search space for knob: wal_buffers
+Defining fine search space for knob: backend_flush_after
+Defining fine search space for knob: wal_writer_flush_after
+Defining fine search space for knob: wal_writer_delay
+Defining fine search space for knob: commit_siblings
+Defining fine search space for knob: commit_delay
+Defining fine search space for knob: join_collapse_limit
+Defining fine search space for knob: from_collapse_limit
+Defining fine search space for knob: bgwriter_flush_after
+Defining fine search space for knob: deadlock_timeout
+Defining fine search space for knob: bgwriter_lru_multiplier
+Defining fine search space for knob: effective_io_concurrency
+Defining fine search space for knob: max_connections
+Defining fine search space for knob: max_worker_processes
+Defining fine search space for knob: max_parallel_workers_per_gather
+Defining fine search space for knob: max_parallel_workers
+Defining fine search space for knob: max_wal_senders
+Defining fine search space for knob: shared_buffers
+Defining fine search space for knob: work_mem
+Defining fine search space for knob: maintenance_work_mem
+Defining fine search space for knob: checkpoint_timeout
+Defining fine search space for knob: checkpoint_completion_target
+Defining fine search space for knob: min_wal_size
+Defining fine search space for knob: max_wal_size
+Defining fine search space for knob: checkpoint_warning
+Defining fine search space for knob: bgwriter_delay
+Defining fine search space for knob: bgwriter_lru_maxpages
+Defining fine search space for knob: vacuum_cost_limit
+Defining fine search space for knob: autovacuum_max_workers
+Defining fine search space for knob: autovacuum_vacuum_scale_factor
+Defining fine search space for knob: autovacuum_analyze_scale_factor
+Defining fine search space for knob: autovacuum_freeze_max_age
+Defining fine search space for knob: vacuum_cost_delay
+Defining fine search space for knob: max_replication_slots
+Defining fine search space for knob: max_standby_streaming_delay
+Defining fine search space for knob: effective_cache_size
+Defining fine search space for knob: default_statistics_target
+Defining fine search space for knob: random_page_cost
+Defining fine search space for knob: track_activity_query_size
+/home/wang7342/WAter
+num_knobs: ['checkpoint_flush_after', 'wal_buffers', 'backend_flush_after', 'wal_writer_flush_after', 'wal_writer_delay', 'commit_siblings', 'commit_delay', 'join_collapse_limit', 'from_collapse_limit', 'bgwriter_flush_after', 'deadlock_timeout', 'bgwriter_lru_multiplier', 'effective_io_concurrency', 'max_connections', 'max_worker_processes', 'max_parallel_workers_per_gather', 'max_parallel_workers', 'max_wal_senders', 'shared_buffers', 'work_mem', 'maintenance_work_mem', 'checkpoint_timeout', 'checkpoint_completion_target', 'min_wal_size', 'max_wal_size', 'checkpoint_warning', 'bgwriter_delay', 'bgwriter_lru_maxpages', 'vacuum_cost_limit', 'autovacuum_max_workers', 'autovacuum_vacuum_scale_factor', 'autovacuum_analyze_scale_factor', 'autovacuum_freeze_max_age', 'vacuum_cost_delay', 'max_replication_slots', 'max_standby_streaming_delay', 'effective_cache_size', 'default_statistics_target', 'random_page_cost', 'track_activity_query_size']
+40
+cat_knobs: ['wal_sync_method', 'huge_pages', 'hot_standby_feedback', 'archive_mode']
+4
+timeout: 296.49779319763184
+--- WAter's hyperparameters have been initialized successfully ---
+Parameter           Value     
+------------------------------
+tuning_budget_s     20000     
+comp_ratio          0.2       
+verify_ratio        0.25      
+success_per_stage   16        
+update_threshold    2         
+comp_ratio_add_unit 0.1       
+------------------------------------------------------------------
+cur_workload_queries: dict_keys(['Q10', 'Q12', 'Q17', 'Q18', 'Q19', 'Q35', 'Q49', 'Q5', 'Q56', 'Q60', 'Q64', 'Q66', 'Q70', 'Q77', 'Q78', 'Q80', 'Q85', 'Q88', 'query010_0', 'query014_0', 'query018_spj_0', 'query023_0', 'query025_spj_0', 'query030_0', 'query050_0', 'query058_0', 'query064_0', 'query080_0'])
+self.cur_tuner.workload_queries：dict_keys(['Q10', 'Q12', 'Q17', 'Q18', 'Q19', 'Q35', 'Q49', 'Q5', 'Q56', 'Q60', 'Q64', 'Q66', 'Q70', 'Q77', 'Q78', 'Q80', 'Q85', 'Q88', 'query010_0', 'query014_0', 'query018_spj_0', 'query023_0', 'query025_spj_0', 'query030_0', 'query050_0', 'query058_0', 'query064_0', 'query080_0'])
+self.subset_default_score：21.668096780776978
+102
+[INFO][abstract_initial_design.py:139] Using 15 initial design configurations and 1 additional configurations.
+[INFO][abstract_intensifier.py:307] Using only one seed for deterministic scenario.
+Tuning round 1 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to tpcds1g with user postgres
+Success to connect to tpcds1g with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to tpcds1g with user postgres
+Success to connect to tpcds1g with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to tpcds1g with user postgres
+Exception while trying to connect: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Reconnet again
+Exception while trying to connect: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+DBMS recovered
+DBMS recovered
+[INFO][abstract_intensifier.py:517] Added config af43e9 as new incumbent because there are no incumbents yet.
+Tuning round 2 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to tpcds1g with user postgres
+Success to connect to tpcds1g with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to tpcds1g with user postgres
+Success to connect to tpcds1g with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to tpcds1g with user postgres
+Success to connect to tpcds1g with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIMEQ10:3681.05126953125
+TIMEQ12:102.62451171875
+TIMEQ17:4470.955810546875
+TIMEQ18:696.67138671875
+TIMEQ19:300.31591796875
+TIMEQ35:235539.04174804688
+TIMEQ49:90.379150390625
+TIMEQ5:1869.477294921875
+TIMEQ56:612.431640625
+TIMEQ60:728.920166015625
+TIMEQ64:787.96875
+TIMEQ66:381.5029296875
+TIMEQ70:1268.219482421875
+TIMEQ77:691.71337890625
+TIMEQ78:3006.234619140625
+TIMEQ80:704.193603515625
+TIMEQ85:107.324951171875
+TIMEQ88:2902.06494140625
+TIMEquery010_0:948.3681640625
+TIMEquery014_0:1874.99169921875
+TIMEquery018_spj_0:267.864990234375
+TIMEquery023_0:959.359619140625
+TIMEquery025_spj_0:1837.974609375
+TIMEquery030_0:19.890869140625
+TIMEquery050_0:73.54248046875
+TIMEquery058_0:505.72900390625
+TIMEquery064_0:459.703369140625
+TIMEquery080_0:64.93017578125
+SAVE: 2
+./optimization_results/postgres/single/102_single.json
+[INFO][abstract_intensifier.py:596] Added config f8ceed and rejected config af43e9 as incumbent because it is not better than the incumbents on 1 instances: 
+Tuning round 3 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to tpcds1g with user postgres
+Success to connect to tpcds1g with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to tpcds1g with user postgres
+Success to connect to tpcds1g with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to tpcds1g with user postgres
+Success to connect to tpcds1g with user postgres
+----- Executing workload on current configuration -----

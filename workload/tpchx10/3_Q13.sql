@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:598475138c72887ac0882c3cd08d33742b94158c711b9edec841fbea10ec9d37
-size 327
+select
+	c_count,
+	count(*) as custdist
+from
+	(
+		select
+			c_custkey,
+			count(o_orderkey)
+		from
+			customer left outer join orders on
+				c_custkey = o_custkey
+				and o_comment not like '%special%packages%'
+		group by
+			c_custkey
+	) as c_orders (c_custkey, c_count)
+group by
+	c_count
+order by
+	custdist desc,
+	c_count desc;

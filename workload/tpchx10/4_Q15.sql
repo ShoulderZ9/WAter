@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:90cc12a9ab78abdcdcf18f773cd20c05bfd5911cc2eec8bb6cd86178ca8516a5
-size 606
+create view revenue4 (supplier_no, total_revenue) as
+    select
+        l_suppkey,
+        sum(l_extendedprice * (1 - l_discount))
+    from
+        lineitem
+    where
+        l_shipdate >= date '1995-06-01'
+        and l_shipdate < date '1995-06-01' + interval '3' month
+    group by
+        l_suppkey;
+
+select
+    s_suppkey,
+    s_name,
+    s_address,
+    s_phone,
+    total_revenue
+from
+    supplier,
+    revenue4
+where
+    s_suppkey = supplier_no
+    and total_revenue = (
+        select
+            max(total_revenue)
+        from
+            revenue4
+    )
+order by
+    s_suppkey;
+
+drop view revenue4;
