@@ -79,7 +79,8 @@ class RunnerSMAC(RunnerTemplate):
             #################################################
             ##### 4. Need to increase comp_ratio or not #####
             #################################################
-            self.whole_time_lst = [sum([v1 for k1, v1 in v.items()]) for k, v in self.single_dict["data"].items() if k in self.exec_whole_idx]
+            # 跑 gsum / random 把这块注释掉
+            """ self.whole_time_lst = [sum([v1 for k1, v1 in v.items()]) for k, v in self.single_dict["data"].items() if k in self.exec_whole_idx]
             self.cur_incumbent_cost = min(self.whole_time_lst)
             print(f"Incumbent:{self.last_incumbent_cost, self.cur_incumbent_cost}")
 
@@ -92,11 +93,12 @@ class RunnerSMAC(RunnerTemplate):
             if stage_to_run == 0:
                 stage_to_run = self.update_threshold
                 self.comp_ratio += self.comp_ratio_add_unit
-                print(f"Increase workload comp_ratio from {self.comp_ratio - self.comp_ratio_add_unit} to {self.comp_ratio}")
+                print(f"Increase workload comp_ratio from {self.comp_ratio - self.comp_ratio_add_unit} to {self.comp_ratio}") """
             
             ##############################################################
             ##### 5. Obtain a new subset and fill in missing history #####
             ##############################################################
-            self.cur_workload_queries = self.compressor.select_queries()
+            # 跑 gsum / random 把这块注释掉
+            """ self.cur_workload_queries = self.compressor.select_queries()
             self.cur_tuner.workload_queries = self.cur_workload_queries
-            self.history_reuser.exec_selected_on_history()
+            self.history_reuser.exec_selected_on_history() """

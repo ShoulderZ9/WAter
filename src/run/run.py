@@ -49,12 +49,14 @@ def main():
         # "python /home/wang7342/WAter/src/run/vanilla_tuner/run_gptuner.py -seed 14",
 
         # DSB+TPCDS WAter+gptuner
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=101 | tee log101.txt",
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=102 | tee log102.txt",
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=103 | tee log103.txt",
+        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=101 | tee log101.txt",
+        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=102 | tee log102.txt",
+        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=103 | tee log103.txt",
 
-
-        
+        # water+smac gsum/random
+        "PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=104 | tee log104.txt",
+        #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=105 | tee log105.txt",
+        #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=105 | tee log105.txt",
 
     ]
     
