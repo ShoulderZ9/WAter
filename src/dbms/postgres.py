@@ -105,6 +105,10 @@ class PgDBMS(DBMSTemplate):
     def update_dbms(self, sql):
         """ Execute sql query on dbms to update knob value and return success flag """
         try:
+            if self.connection is None:
+                print("No active PostgreSQL connection, trying to reconnect before applying knob change.")
+                if not self._connect():
+                    return False
             self.connection.autocommit = True
             cursor = self.connection.cursor()
             cursor.execute(sql)

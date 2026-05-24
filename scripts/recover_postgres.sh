@@ -1,7 +1,15 @@
 #!/bin/sh
 set -eu
 
-cd /
-sudo /usr/bin/rm -f /var/lib/postgresql/14/main/postgresql.auto.conf
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+RESTART_SCRIPT="${SCRIPT_DIR}/restart_postgres.sh"
+
+PGDATA_DIR="${PGDATA:-/var/lib/postgresql/14/main}"
+POSTGRES_AUTO_CONF="${POSTGRES_AUTO_CONF:-${PGDATA_DIR}/postgresql.auto.conf}"
+
+if [ -f "${POSTGRES_AUTO_CONF}" ]; then
+    rm -f "${POSTGRES_AUTO_CONF}"
+fi
+
 sleep 2
-sudo systemctl restart postgresql
+sh "${RESTART_SCRIPT}"
