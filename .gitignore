@@ -1,3 +1,4 @@
 /workload/datafile
 /venv_water
 /.venv
+**/__pycache__/

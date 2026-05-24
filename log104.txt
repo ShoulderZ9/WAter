@@ -28132,3 +28132,967 @@ Disconnecting done ...
 Trying to connect to imdb with user postgres
 Success to connect to imdb with user postgres
 ----- Executing workload on current configuration -----
+HHH
+TIME29c:192.05419921875
+TIME29b:121.48583984375
+TIME25a:2072.02392578125
+TIME33a:97.228515625
+TIME33c:97.151123046875
+TIME25c:3784.410888671875
+TIME29a:129.1396484375
+TIME25b:244.3046875
+TIME33b:89.567138671875
+TIME28a:477.830322265625
+TIME24a:465.378662109375
+TIME28b:242.491455078125
+TIME28c:595.48193359375
+TIME9c:452.388671875
+TIME9d:2831.05859375
+TIME22b:204.132080078125
+TIME21b:75.50146484375
+TIME21c:66.934326171875
+TIME31b:312.965087890625
+TIME27c:111.249755859375
+TIME31c:946.620849609375
+TIME30b:334.794921875
+SAVE: 494
+./optimization_results/postgres/single/104_single.json
+Tuning round 495 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIME29c:192.686767578125
+TIME29b:121.503173828125
+TIME25a:2274.502197265625
+TIME33a:120.82568359375
+TIME33c:134.289306640625
+TIME25c:4092.770263671875
+TIME29a:129.462646484375
+TIME25b:247.6494140625
+TIME33b:89.9267578125
+TIME28a:479.556640625
+TIME24a:464.510986328125
+TIME28b:242.8212890625
+TIME28c:600.749755859375
+TIME9c:450.800048828125
+TIME9d:2857.16162109375
+TIME22b:206.46142578125
+TIME21b:77.058349609375
+TIME21c:70.26904296875
+TIME31b:308.695556640625
+TIME27c:133.475830078125
+TIME31c:948.93701171875
+TIME30b:332.54345703125
+SAVE: 495
+./optimization_results/postgres/single/104_single.json
+Tuning round 496 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIME29c:193.593505859375
+TIME29b:125.2099609375
+TIME25a:2123.367431640625
+TIME33a:98.5322265625
+TIME33c:97.800537109375
+TIME25c:3809.982666015625
+TIME29a:130.28466796875
+TIME25b:248.146240234375
+TIME33b:90.15234375
+TIME28a:486.650634765625
+TIME24a:578.792724609375
+TIME28b:324.211669921875
+TIME28c:792.113037109375
+TIME9c:526.43994140625
+TIME9d:2889.02197265625
+TIME22b:209.923095703125
+TIME21b:75.801025390625
+TIME21c:67.304931640625
+TIME31b:312.897216796875
+TIME27c:134.67822265625
+TIME31c:949.72314453125
+TIME30b:332.398681640625
+SAVE: 496
+./optimization_results/postgres/single/104_single.json
+Tuning round 497 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIME29c:191.31884765625
+TIME29b:122.123046875
+TIME25a:2040.68408203125
+TIME33a:82.7705078125
+TIME33c:97.680419921875
+TIME25c:3885.73681640625
+TIME29a:129.168701171875
+TIME25b:244.82080078125
+TIME33b:89.656005859375
+TIME28a:486.434814453125
+TIME24a:468.646728515625
+TIME28b:245.85595703125
+TIME28c:605.3984375
+TIME9c:449.754638671875
+TIME9d:2862.768798828125
+TIME22b:209.00732421875
+TIME21b:75.64990234375
+TIME21c:67.77978515625
+TIME31b:306.73876953125
+TIME27c:133.34326171875
+TIME31c:996.03173828125
+TIME30b:373.22265625
+SAVE: 497
+./optimization_results/postgres/single/104_single.json
+Tuning round 498 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIME29c:189.07568359375
+TIME29b:120.949462890625
+TIME25a:1986.0732421875
+TIME33a:97.60498046875
+TIME33c:97.372314453125
+TIME25c:3713.06005859375
+TIME29a:130.73779296875
+TIME25b:240.781982421875
+TIME33b:89.72412109375
+TIME28a:477.129150390625
+TIME24a:463.86865234375
+TIME28b:241.88037109375
+TIME28c:596.2373046875
+TIME9c:449.047607421875
+TIME9d:2854.248291015625
+TIME22b:204.012939453125
+TIME21b:74.413330078125
+TIME21c:66.19677734375
+TIME31b:308.024169921875
+TIME27c:135.6298828125
+TIME31c:944.416259765625
+TIME30b:335.353515625
+SAVE: 498
+./optimization_results/postgres/single/104_single.json
+self.success_run_last:['483', '484', '485', '486', '487', '488', '489', '490', '491', '492', '493', '494', '495', '496', '497', '498']
+Exploration route eliminate round 483
+Exploration route eliminate round 484
+Exploration route eliminate round 485
+Exploration route eliminate round 486
+Exploration route eliminate round 487
+Exploration route eliminate round 488
+Exploration route eliminate round 489
+Exploration route eliminate round 490
+Exploration route eliminate round 491
+Exploration route eliminate round 492
+Exploration route eliminate round 493
+Exploration route eliminate round 494
+Exploration route eliminate round 495
+Exploration route eliminate round 496
+Exploration route eliminate round 497
+Exploration route eliminate round 498
+whole_score:{}
+exec_whole_last: []
+self.exec_whole_last: []
+self.subset_default_score：0
+[INFO][abstract_initial_design.py:74] Using `n_configs` and ignoring `n_configs_per_hyperparameter`.
+illegal config round:1 not in data
+illegal config round:2 not in data
+illegal config round:3 not in data
+illegal config round:4 not in data
+illegal config round:5 not in data
+illegal config round:6 not in data
+illegal config round:7 not in data
+illegal config round:8 not in data
+illegal config round:9 not in data
+illegal config round:10 not in data
+illegal config round:11 not in data
+illegal config round:12 not in data
+illegal config round:13 not in data
+illegal config round:14 not in data
+illegal config round:15 not in data
+illegal config round:17 not in data
+illegal config round:19 not in data
+illegal config round:20 not in data
+illegal config round:21 not in data
+illegal config round:22 not in data
+illegal config round:23 not in data
+illegal config round:24 not in data
+illegal config round:27 not in data
+illegal config round:28 not in data
+illegal config round:29 not in data
+illegal config round:30 not in data
+illegal config round:31 not in data
+illegal config round:32 not in data
+illegal config round:35 not in data
+illegal config round:36 not in data
+illegal config round:37 not in data
+illegal config round:38 not in data
+illegal config round:40 not in data
+illegal config round:47 not in data
+illegal config round:48 not in data
+illegal config round:49 not in data
+illegal config round:50 not in data
+illegal config round:52 not in data
+illegal config round:70 not in data
+illegal config round:79 not in data
+illegal config round:81 not in data
+illegal config round:84 not in data
+illegal config round:85 not in data
+illegal config round:88 not in data
+illegal config round:108 not in data
+illegal config round:272 not in data
+illegal config round:302 not in data
+illegal config round:357 not in data
+illegal config round:358 not in data
+illegal config round:359 not in data
+[INFO][abstract_initial_design.py:139] Using 15 initial design configurations and 1 additional configurations.
+[INFO][abstract_intensifier.py:517] Added config 256fd1 as new incumbent because there are no incumbents yet.
+[INFO][abstract_intensifier.py:596] Added config b77750 and rejected config 256fd1 as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config 5e542f and rejected config b77750 as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config 72019e and rejected config 5e542f as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config a42d1f and rejected config 72019e as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config 7f3796 and rejected config a42d1f as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config 4ecc79 and rejected config 7f3796 as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config 711ddd and rejected config 4ecc79 as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config ae6b7b and rejected config 711ddd as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config 67dbc5 and rejected config ae6b7b as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config 49c3f1 and rejected config 67dbc5 as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config a556d6 and rejected config 49c3f1 as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config fd4d90 and rejected config a556d6 as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config 78a3a2 and rejected config fd4d90 as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][abstract_intensifier.py:596] Added config 1c5681 and rejected config 78a3a2 as incumbent because it is not better than the incumbents on 1 instances: 
+[INFO][intensifier.py:126] Added config 256fd1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b86397 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f30858 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cacab5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 259f6e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 82744d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aeeef2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cafc4e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7b36da from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 660c9b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2f4018 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 348871 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config efe40c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8408f0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ceffd9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b77750 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 65cbfb from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5e542f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b10a39 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0b75d5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config facf51 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a92983 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0865e1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 61a20c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e6a61b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8cda89 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config bf8760 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f3fdbc from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3d250b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aba38d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2004e3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c33b8d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 545849 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 398c7b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 43c4cc from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2ebb9c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 76d252 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1938e0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aeed17 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config db07c1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config bddbba from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ec185a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8cea94 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0e2037 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0accb8 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3abc8b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1063c9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a2ce07 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 325d13 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a35063 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aa803e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f9be91 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5659ff from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e2a6d1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 74d167 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cdf3e7 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9fb862 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 89535d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c4002f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 499c80 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e097f8 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 6cdc33 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 277cfd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 15f694 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config bcb011 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 6a40c0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 42f000 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f8d0df from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9dcd12 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ff89f1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a961cc from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ed1487 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 86152c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 64fb97 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 548218 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8a9540 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a9037c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0b8c5d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c49690 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4c8ab0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fe8d4e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 12eb3d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0ae014 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 65d6b4 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 6de717 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config dc928d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a14bd5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1d3edd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 72019e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 95a48b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 6afc1f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1a9495 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0ee772 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config dad2c5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f0ede6 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 142071 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e1b92c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 029416 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 150c02 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 96468e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c04ca2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 31ce88 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fe55a6 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c3c9a3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c7f1d5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b8fd1a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a411b9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 37ad20 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 453c14 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 45e2ff from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9a16d4 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aa7e9b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 21912d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 77e079 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config dea97c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 65acc7 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 755c57 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e15f74 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a42d1f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2bc04e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 27bd42 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3ca6e6 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config bbd0e9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4068f8 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config eef473 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fb165a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1669ac from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config bc5f1c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cc32d1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b8f636 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 70eb8b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0d2eef from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5de899 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1de53b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 324038 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 374847 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 368b44 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 509210 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b843c2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7f3796 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ce2269 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7b15ab from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 78edd9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 39d3cb from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f2ee2e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5150d5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config caa88a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f88eeb from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5d26c3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1945ec from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fead37 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9acc9d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0cbac9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e5d0d8 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3ee530 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c4b5d0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e67f87 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4b9320 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e82545 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config eff07a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d32fd9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4a0a7b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config df659d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4ecc79 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cf2d58 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 719cca from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2c4818 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 128106 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config af2d6f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e2bc0a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2e1d3d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fa92be from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0818bd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9aa735 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4c36fd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c1cd54 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3b0bbf from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d0b31b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7659ce from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 36790b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 573884 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2e656d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0cf500 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fc77d1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 53074e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aa0952 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ac0226 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a5aa13 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b76d01 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ca9b09 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 92292d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0461f0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c5911d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0bc5e8 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 80820e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config abfbc9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 59ede0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b0a302 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1f803b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a93104 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 71acd9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 89bc07 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3c1929 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 337c00 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d3dd4d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 406ad1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 87c686 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9788e5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cf5790 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0b9d8a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cd8032 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1bfa09 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config abb701 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7c503e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 785838 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a78aea from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 979d24 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 628f8c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e6f4de from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 575106 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 413c25 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b0ceae from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 711ddd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aa52d0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4abf34 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 33c398 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config dd42bc from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config df451a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 26d72e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 77496e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 703a7f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ae6b7b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8117a0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9c6f95 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b71a12 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 67dbc5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 66f7ee from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 80e006 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 558634 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 91cff9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d06f21 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 24c70e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 257550 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 74a51f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config faad9e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 13fdab from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 433001 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 517e1a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config df7910 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f9918c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ed2400 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d18cdc from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f748c9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 182e1f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c39810 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e6a504 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config dd7b68 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 35d9bd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7a9b14 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 431361 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3c103b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 27245d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2dedc1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e5720c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 95ca25 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a2af9b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config bd052b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3048fd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4fe2ab from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 49c3f1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ab4b16 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e3b0cd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0a0d65 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 89caba from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1c7980 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fd895c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 63c882 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a556d6 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f6b657 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d8be99 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 622263 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b57a07 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 296e42 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f3a05c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0a2584 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 59d5dc from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config bbb202 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a4b249 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ca48d3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 979a5b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4c8080 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9a2650 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 42634f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 852c03 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c09f7a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fafba2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e628bb from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c843c5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0726bb from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7cf49f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c62b73 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f0f9a2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9a8935 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ebc02f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 50e672 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config caffb0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 834b39 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 15ae8c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ad211d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5c83f3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fb282b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 99c88f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cad05b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 28236a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 503196 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2d4f8d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 67ab37 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 85ee23 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8332c1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 853a9a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1e6f37 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 177d96 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9359cf from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ac5bdd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 23350b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9415fb from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 60636e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 865ac4 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 106701 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 66a186 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1f5afd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 6c5dff from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0c664f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aabc47 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a2d5e0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3034f6 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 73409e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3ec572 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8b3620 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d5e64f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0b3b76 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config dd908e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e8ffb5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cc95fb from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 12e246 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8bec68 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0ebb32 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a79eb9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config dd7c72 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3b1512 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5d9f3e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cb2614 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 26fc62 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5644b4 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fdd385 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5aa630 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1bfeb9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a39f3a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8d8496 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e5bb61 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fd4d90 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f1b5e3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 52c763 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d7bc94 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2888f2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 23bc77 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5f989e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 175c99 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4fff75 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0fd29c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config df3835 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f23d68 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9ec935 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 78a3a2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fe67cd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1a1362 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 59b1a1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f34f00 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d8fcaa from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 6110ec from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fae73e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9d36c4 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1389aa from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e4de92 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 55ed64 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5f2f0b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7a2341 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aaea0a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0f64e3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9dd3cf from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8e8fa4 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c33a5a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7854a8 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f94905 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b726c0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2192b3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c1f9e5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3c7c4a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b4589f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a61b42 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b8007a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 757428 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 084f5d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d3c41e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 66564f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1a7ecf from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 570896 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 69cf8c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d51f03 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7dd064 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8293c5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 547c09 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d6530c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c74fe5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0726aa from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 282abd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aaa868 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 61ffb6 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1b4fe3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3505b0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1bef16 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4c8453 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fff6a3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 04aa1a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b9c7d8 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 683e1e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0b8c42 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1c5681 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config a69709 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5c29c6 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 0429f6 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2868dc from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9446b3 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8baf2f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 619e34 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e38c8f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5ef16b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ec90be from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 69e849 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config af5d32 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3c0014 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4cc0bf from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fcef8f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8dbf42 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 462b20 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 20ffad from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b5bd04 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f6e20a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 11e82c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9aa1ca from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f25ec1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 79989d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c38fae from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 9b89ec from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2dae1b from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 5fea58 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4cab18 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8e5a84 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 715170 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ca98e2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e1aa04 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 6476a7 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 686eeb from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 912bfe from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f88fd2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b67431 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 41eefd from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 4bfdee from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fd33ad from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 3c73c1 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config d2bf2d from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config deedf2 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f3e8f4 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c0209c from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 6be39a from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config cf0f00 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config b45e77 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config e0c564 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7fbe30 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 102088 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7ef6a5 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config dca0b9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config f68063 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 43cd66 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 8b78c7 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 2c66d8 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config fb831f from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 698df0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 611a7e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 7148d0 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config ce16b9 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config abe0e6 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 1ce94e from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 787675 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config aab389 from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 620aab from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config 01a7bc from runhistory to the intensifier queue.
+[INFO][intensifier.py:126] Added config c04fed from runhistory to the intensifier queue.
+[INFO][abstract_intensifier.py:289] Added existing seed 104 from runhistory to the intensifier.
+[INFO][abstract_intensifier.py:307] Using only one seed for deterministic scenario.
+Tuning round 499 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIME29c:190.506103515625
+TIME29b:122.511962890625
+TIME25a:2061.651611328125
+TIME33a:97.609130859375
+TIME33c:161.280029296875
+TIME25c:4046.33251953125
+TIME29a:147.790283203125
+TIME25b:267.850341796875
+TIME33b:103.2431640625
+TIME28a:492.492431640625
+TIME24a:467.322021484375
+TIME28b:243.7607421875
+TIME28c:598.985107421875
+TIME9c:452.785888671875
+TIME9d:2843.28173828125
+TIME22b:204.96240234375
+TIME21b:75.31005859375
+TIME21c:67.591064453125
+TIME31b:309.693115234375
+TIME27c:135.48388671875
+TIME31c:949.8974609375
+TIME30b:331.767822265625
+SAVE: 499
+./optimization_results/postgres/single/104_single.json
+Tuning round 500 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIME29c:190.878662109375
+TIME29b:121.7509765625
+TIME25a:1935.669189453125
+TIME33a:97.9697265625
+TIME33c:97.7587890625
+TIME25c:3808.34033203125
+TIME29a:129.25244140625
+TIME25b:240.894775390625
+TIME33b:90.121826171875
+TIME28a:482.7041015625
+TIME24a:467.267578125
+TIME28b:245.235107421875
+TIME28c:603.890625
+TIME9c:442.309814453125
+TIME9d:3044.87841796875
+TIME22b:275.069580078125
+TIME21b:105.15771484375
+TIME21c:98.761474609375
+TIME31b:352.27490234375
+TIME27c:170.223388671875
+TIME31c:962.82470703125
+TIME30b:334.807373046875
+SAVE: 500
+./optimization_results/postgres/single/104_single.json
+Tuning round 501 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIME29c:189.830810546875
+TIME29b:122.345947265625
+TIME25a:2095.31396484375
+TIME33a:98.423828125
+TIME33c:98.0595703125
+TIME25c:3772.977783203125
+TIME29a:130.246337890625
+TIME25b:241.772705078125
+TIME33b:90.16455078125
+TIME28a:483.70703125
+TIME24a:473.765380859375
+TIME28b:246.263916015625
+TIME28c:603.6181640625
+TIME9c:448.97265625
+TIME9d:2861.3232421875
+TIME22b:206.27197265625
+TIME21b:76.518310546875
+TIME21c:67.97607421875
+TIME31b:308.938232421875
+TIME27c:133.84716796875
+TIME31c:953.963134765625
+TIME30b:336.346435546875
+SAVE: 501
+./optimization_results/postgres/single/104_single.json
+Tuning round 502 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIME29c:191.52880859375
+TIME29b:122.911376953125
+TIME25a:2092.0751953125
+TIME33a:98.552001953125
+TIME33c:98.19189453125
+TIME25c:3760.09375
+TIME29a:131.348388671875
+TIME25b:244.904541015625
+TIME33b:91.19482421875
+TIME28a:489.466552734375
+TIME24a:472.602783203125
+TIME28b:247.1845703125
+TIME28c:607.8935546875
+TIME9c:449.201171875
+TIME9d:2850.095703125
+TIME22b:208.850341796875
+TIME21b:77.322998046875
+TIME21c:68.078369140625
+TIME31b:310.170166015625
+TIME27c:135.46728515625
+TIME31c:957.863037109375
+TIME30b:336.298828125
+SAVE: 502
+./optimization_results/postgres/single/104_single.json
+Tuning round 503 ...
+--- Restore the dbms to default configuration ---
+DBMS recovered
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+Disconnecting ...
+Disconnecting done ...
+Trying to connect to imdb with user postgres
+Success to connect to imdb with user postgres
+----- Executing workload on current configuration -----
+HHH
+TIME29c:194.162353515625
+TIME29b:122.4287109375
+TIME25a:2114.135009765625
+TIME33a:99.095947265625
+TIME33c:167.7470703125
+TIME25c:3747.681640625
+TIME29a:130.697509765625
+TIME25b:245.01806640625
+TIME33b:91.84228515625
+TIME28a:480.569091796875
+TIME24a:466.497314453125
+TIME28b:244.499267578125
+TIME28c:598.79248046875
+TIME9c:441.508544921875
+TIME9d:2853.73193359375
+TIME22b:204.302978515625
+TIME21b:74.710205078125
+TIME21c:67.079833984375
+TIME31b:307.661376953125
+TIME27c:134.59619140625
+TIME31c:945.785400390625
+TIME30b:333.956298828125
+SAVE: 503
+./optimization_results/postgres/single/104_single.json
