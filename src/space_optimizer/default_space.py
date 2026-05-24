@@ -1,4 +1,5 @@
 from abc import abstractmethod
+import math
 import time
 import sys
 import os
@@ -87,6 +88,64 @@ class DefaultSpace:
         if knob_type == "real":
             return float(value)
 
+    def _get_normal_knowledge_bounds(self, knob_name, info):
+        file_path = os.path.join(self.skill_path, f"{knob_name}.json")
+        if not os.path.exists(file_path):
+            return None, None
+
+        with open(file_path, "r") as json_file:
+            data = json.load(json_file)
+
+        knob_type = info["vartype"]
+        unit = info["unit"]
+        min_value = data.get("min_value")
+        max_value = data.get("max_value")
+
+        if min_value is None and max_value is None:
+            return None, None
+
+        def normalize(value):
+            if value is None:
+                return None
+
+            if unit:
+                unit_size = self._transfer_unit(unit)
+                value = self._transfer_unit(value) / unit_size
+
+            return self._type_transfer(knob_type, value)
+
+        return normalize(min_value), normalize(max_value)
+
+    def _sanitize_numeric_bounds(self, knob_name, info, min_value, max_value, boot_value):
+        knob_type = info["vartype"]
+
+        if knob_type == "real":
+            # PostgreSQL sometimes reports a theoretical upper bound (~1.8e308) for
+            # planner cost knobs. That range breaks SMAC's Latin Hypercube design.
+            if max_value > 1e100 or min_value < -1e100:
+                knowledge_min, knowledge_max = self._get_normal_knowledge_bounds(knob_name, info)
+                if knowledge_min is not None:
+                    min_value = knowledge_min
+                if knowledge_max is not None:
+                    max_value = knowledge_max
+
+                if knowledge_min is None and knowledge_max is None:
+                    span = max(abs(boot_value), 1.0)
+                    min_value = max(min_value, boot_value - span)
+                    max_value = min(max_value, boot_value + span)
+
+        if not math.isfinite(min_value):
+            min_value = boot_value
+        if not math.isfinite(max_value):
+            max_value = boot_value
+
+        min_value = min(min_value, boot_value)
+        max_value = max(max_value, boot_value)
+        if min_value == max_value:
+            max_value = min_value + max(abs(min_value) * 0.1, 1.0)
+
+        return min_value, max_value
+
     def knob_select(self):
         """ 
             Select which knobs to be tuned, store the names in 'self.target_knobs' 
@@ -111,6 +170,9 @@ class DefaultSpace:
         max_value = info["max_val"]
         knob_type = info["vartype"]
         if knob_type == "integer":
+            boot_value = self._type_transfer(knob_type, boot_value)
+            min_value = self._type_transfer(knob_type, min_value)
+            max_value = self._type_transfer(knob_type, max_value)
             if int(max_value) > sys.maxsize:
                 knob = UniformIntegerHyperparameter(
                     knob_name, 
@@ -126,11 +188,17 @@ class DefaultSpace:
                     default_value = int(boot_value),
                 )
         elif knob_type == "real":
+            boot_value = self._type_transfer(knob_type, boot_value)
+            min_value = self._type_transfer(knob_type, min_value)
+            max_value = self._type_transfer(knob_type, max_value)
+            min_value, max_value = self._sanitize_numeric_bounds(
+                knob_name, info, min_value, max_value, boot_value
+            )
             knob = UniformFloatHyperparameter(
                 knob_name,
-                float(min_value),
-                float(max_value),
-                default_value = float(boot_value)
+                min_value,
+                max_value,
+                default_value = boot_value
             )
         elif knob_type == "enum":
             knob = CategoricalHyperparameter(
