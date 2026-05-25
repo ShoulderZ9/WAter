@@ -56,6 +56,8 @@ class RunnerGPTuner(RunnerTemplate):
         stage_to_run = self.update_threshold
         self.cur_tuner = self.tuner[1]
         self.cur_tuner.round = self.round
+        self.cur_tuner.workload_queries = self.cur_workload_queries
+        print(f"Fine stage workload_queries: {self.cur_tuner.workload_queries.keys()}")
 
         while True:
             ##############################
