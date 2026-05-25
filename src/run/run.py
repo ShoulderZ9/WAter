@@ -54,11 +54,17 @@ def main():
         #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=103 | tee log103.txt",
 
         # water+smac gsum/random
-        "PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=104 | tee log104.txt",
+        #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=104 | tee log104.txt",
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=105 | tee log105.txt",
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=105 | tee log105.txt",
 
+        # water+gptuner gsum/random
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=707 | tee log 707",
+        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=708 | tee log 708",
+
     ]
+
+    # PYTHONPATH=src python3 src/run/run.py
     
     print(f"准备执行 {len(commands)} 个命令:")
     for i, cmd in enumerate(commands, 1):
