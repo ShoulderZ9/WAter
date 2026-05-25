@@ -56,9 +56,7 @@ class RunnerGPTuner(RunnerTemplate):
         stage_to_run = self.update_threshold
         self.cur_tuner = self.tuner[1]
         self.cur_tuner.round = self.round
-        self.cur_tuner.workload_queries = self.cur_workload_queries
-        print(f"Fine stage workload_queries: {self.cur_tuner.workload_queries.keys()}")
-
+        
         while True:
             ##############################
             ##### 2.1 Timeout or not #####
@@ -91,8 +89,8 @@ class RunnerGPTuner(RunnerTemplate):
             ###############################################################
             ##### 2.3 Obtain a new subset and fill in missing history #####
             ###############################################################
-            # 运行 GSUM / random 固定子集时注释
-            """ self.cur_workload_queries = self.compressor.select_queries()
+            # 运行 GSUM / random 固定子集时注释第一行
+            #self.cur_workload_queries = self.compressor.select_queries()
             self.cur_tuner.workload_queries = self.cur_workload_queries
             self.history_reuser.exec_selected_on_history()
             # Get subset's performance on default configuration
@@ -100,7 +98,7 @@ class RunnerGPTuner(RunnerTemplate):
             for idx, value in self.time_dict.items():
                 if idx in self.cur_tuner.workload_queries:
                     self.subset_default_score += value
-            print(f"self.subset_default_score：{self.subset_default_score}") """
+            print(f"self.subset_default_score：{self.subset_default_score}")
 
             ###################################
             ##### 2.4 Tune the new subset #####
