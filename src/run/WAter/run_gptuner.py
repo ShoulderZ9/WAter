@@ -19,6 +19,18 @@ if __name__ == '__main__':
             json.dump(time_dict, f, indent=4)
         return time_dict
 
+    def load_time_dict(dbms, time_dict_path, whole_workload_queries):
+        try:
+            with open(time_dict_path, 'r') as f:
+                time_dict = json.load(f)
+            if set(time_dict.keys()) != set(whole_workload_queries.keys()):
+                raise ValueError("time_dict keys do not match current workload")
+        except Exception as e:
+            print(f"Regenerating '{time_dict_path}' because it is missing or incompatible: {e}")
+            time_dict = get_time_dict(dbms, time_dict_path, whole_workload_queries)
+            print("get_time_dict() finishes.")
+        return time_dict
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-seed", type=int, default=1)
     args = parser.parse_args()
@@ -43,14 +55,8 @@ if __name__ == '__main__':
         workload_queries[sql.split(".")[0]] = q
 
     # get timeout (2 * (workload exectution time on default configuration))
-    time_dict_path = "./time_dict.json"
-    try:
-        with open(time_dict_path, 'r') as f:
-            time_dict = json.load(f)
-    except:
-        print("Executing workload on default config to get 'time_dict.json'.")
-        time_dict = get_time_dict(dbms, time_dict_path, workload_queries)
-        print("get_time_dict() finishes.")
+    time_dict_path = f"./{workload_name}_time_dict.json"
+    time_dict = load_time_dict(dbms, time_dict_path, workload_queries)
     timeout = 2 * sum(time_dict.values())
     
     tuner = []

@@ -10,7 +10,7 @@ class RunnerTemplate(ABC):
         self.dbms = dbms
         self.seed = seed
         self.whole_workload_queries = {key: whole_workload_queries[key] for key in sorted(whole_workload_queries, key=lambda x: x[0])}
-        self.time_dict_path = "./time_dict.json"
+        self.time_dict_path = f"./{workload_name}_time_dict.json"
         self.record_single_path = ""
         self.ini_file_path = "./configs/water_params.ini"
         self.cur_stage = 0 # current time_slice
@@ -28,6 +28,11 @@ class RunnerTemplate(ABC):
         print(f"timeout: {self.timeout}")
         with open(self.time_dict_path, 'r') as f:
             self.time_dict = json.load(f)
+        if set(self.time_dict.keys()) != set(self.whole_workload_queries.keys()):
+            raise ValueError(
+                f"time_dict keys in {self.time_dict_path} do not match workload {workload_name}. "
+                "Please regenerate the workload-specific time_dict."
+            )
 
         self.get_init_params()
 
