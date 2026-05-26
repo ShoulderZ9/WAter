@@ -107,7 +107,7 @@ class RunnerTemplate(ABC):
         if p.is_alive():
             p.terminate()
             p.join() 
-            return self.timeout
+            return self.timeout * 1000.0
         else:
             return result_queue.get()
 
@@ -120,7 +120,7 @@ class RunnerTemplate(ABC):
         if flag: 
             return execution_time
         else:
-            return self.timeout
+            return self.timeout * 1000.0
 
     @abstractmethod
     def optimize(self):

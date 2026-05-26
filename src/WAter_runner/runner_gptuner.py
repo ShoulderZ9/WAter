@@ -40,7 +40,7 @@ class RunnerGPTuner(RunnerTemplate):
         # choose the top-k configurations that perform well on current subset to verify on the whole workload
         with open(self.cur_tuner.runhistory_path, 'r') as f:
             runhistory_data = json.load(f)["data"]
-        self.success_run_last = [k for k, v in self.single_dict["data"].items() if self.timeout not in v.values()]
+        self.success_run_last = [k for k, v in self.single_dict["data"].items() if self.timeout * 1000 not in v.values()]
         self.success_run_last = sorted(self.success_run_last, key=lambda k: runhistory_data[int(k)-1]["cost"])
         # configurations perform worse than the default configurations on the current subset are discarded
         self.exec_whole_last = [config for config in self.success_run_last[:min(int(30*self.verify_ratio), len(self.success_run_last))] if runhistory_data[int(config)-1]["cost"] <= self.subset_default_score * 1.0 * 1000]
