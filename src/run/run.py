@@ -34,34 +34,20 @@ def main():
     """主函数"""
     # 在这里定义要执行的命令列表
     commands = [
-        # "python3 /home/wang7342/GSUM_rebuild/src/entry.py --sql_num 1000 --dirname job1000_sqlstorm --db imdb --config /home/wang7342/GSUM_rebuild/configs/postgres_imdb.ini",
-        # "python3 /home/wang7342/GSUM_rebuild/src/entry.py --sql_num 880 --dirname tpcdsX10_select --db tpcds1g --config /home/wang7342/GSUM_rebuild/configs/postgres_tpcds.ini",
-
-        # DSB+TPCDS gptuner
-        # "python /home/wang7342/WAter/src/run/vanilla_tuner/run_gptuner.py -seed 1",
-        # "python /home/wang7342/WAter/src/run/vanilla_tuner/run_gptuner.py -seed 2",
-        # "python /home/wang7342/WAter/src/run/vanilla_tuner/run_gptuner.py -seed 3",
-
-        # job1000_sqlstorm gptuner
-        # "python /home/wang7342/WAter/src/run/vanilla_tuner/run_gptuner.py -seed 11",
-        # "python /home/wang7342/WAter/src/run/vanilla_tuner/run_gptuner.py -seed 12",
-        # "python /home/wang7342/WAter/src/run/vanilla_tuner/run_gptuner.py -seed 13",
-        # "python /home/wang7342/WAter/src/run/vanilla_tuner/run_gptuner.py -seed 14",
-
-        # DSB+TPCDS WAter+gptuner
-        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=101 | tee log101.txt",
-        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=102 | tee log102.txt",
-        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=103 | tee log103.txt",
-
         # water+smac gsum/random
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=104 | tee log104.txt",
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=105 | tee log105.txt",
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=105 | tee log105.txt",
 
         # water+gptuner gsum/random
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=707 | tee log 707",
+        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=707 | tee log 707",
         #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=708 | tee log 708",
 
+        # water+gptuner 完全体
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=711 | tee log711.txt",
+
+        # water+smac 完全体
+        "PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=712 | tee log712.txt",
     ]
 
     # PYTHONPATH=src python3 src/run/run.py
