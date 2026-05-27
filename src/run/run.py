@@ -35,7 +35,7 @@ def main():
     # 在这里定义要执行的命令列表
     commands = [
         # water+smac gsum/random
-        #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=104 | tee log104.txt",
+        "PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=721 | tee log721.txt",
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=105 | tee log105.txt",
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=105 | tee log105.txt",
 
@@ -44,7 +44,7 @@ def main():
         #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=708 | tee log 708",
 
         # water+gptuner 完全体
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=714 | tee log714.txt",
+        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=714 | tee log714.txt",
 
         # water+smac 完全体
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=712 | tee log712.txt",
