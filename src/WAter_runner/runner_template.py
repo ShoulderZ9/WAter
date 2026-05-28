@@ -38,8 +38,12 @@ class RunnerTemplate(ABC):
 
         # initialize WorkloadCompressor
         self.compressor = WorkloadCompressor(self)
-        self.cur_workload_queries = self.compressor.get_GSUM_init_sql(workload_name, self.comp_ratio)
-        #self.cur_workload_queries = self.compressor.GPT_init_queries(self.comp_ratio)
+        self.cur_workload_queries = self.compressor.get_init_sql(
+            self.init_subset_method,
+            workload_name,
+            self.comp_ratio,
+            self.seed,
+        )
         print(f"cur_workload_queries: {self.cur_workload_queries.keys()}")
 
         # initialize HistoryReuser
@@ -54,6 +58,7 @@ class RunnerTemplate(ABC):
 
         self.tuning_budget_s = config.getint('WATER', 'tuning_budget_s')
         self.comp_ratio = config.getfloat('WATER', 'comp_ratio')
+        self.init_subset_method = config.get('WATER', 'init_subset_method', fallback='gsum').strip().lower()
         self.verify_ratio = config.getfloat('WATER', 'verify_ratio')
         self.success_per_stage = config.getint('WATER', 'success_per_stage')
         self.update_threshold = config.getint('WATER', 'update_threshold')
@@ -64,6 +69,7 @@ class RunnerTemplate(ABC):
         print(f"{'-'*30}")
         print(f"{'tuning_budget_s':<20}{self.tuning_budget_s:<10}")
         print(f"{'comp_ratio':<20}{self.comp_ratio:<10}")
+        print(f"{'init_subset_method':<20}{self.init_subset_method:<10}")
         print(f"{'verify_ratio':<20}{self.verify_ratio:<10}")
         print(f"{'success_per_stage':<20}{self.success_per_stage:<10}")
         print(f"{'update_threshold':<20}{self.update_threshold:<10}")

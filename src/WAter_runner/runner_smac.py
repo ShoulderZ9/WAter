@@ -77,10 +77,10 @@ class RunnerSMAC(RunnerTemplate):
                 return
             
             #####################################################################
-            ##### 4-5. Fixed initial subset mode: keep using GSUM 0.2 subset #####
+            ##### 4-5. Fixed initial subset mode: keep using the initial subset #####
             #####################################################################
             print(
-                f"Fixed subset mode: keep the initial GSUM subset with comp_ratio={self.comp_ratio}, "
+                f"Fixed subset mode: keep the initial {self.init_subset_method} subset with comp_ratio={self.comp_ratio}, "
                 "skip comp_ratio increase and subset reselection."
             )
 

@@ -6,7 +6,7 @@ class WorkloadCompressor:
         self.runner = runner
 
     #########################################################
-    ##### 1. Code related to initialize subset via GSUM #####
+    ##### 1. Code related to initialize the first subset #####
     #########################################################
     def get_GSUM_init_sql(self, workload_name, comp_ratio):
         gsum_init_sql_path = os.path.join("gsum_init_sql", f"{workload_name}", f"{workload_name}_{comp_ratio}.json")
@@ -19,6 +19,44 @@ class WorkloadCompressor:
             sql_dict = json.load(f)
         
         return sql_dict
+
+    def get_random_init_sql(self, comp_ratio, seed=None):
+        time_budget = comp_ratio * sum(self.runner.time_dict.values())
+        rng = random.Random(seed)
+        whole_query_keys = list(self.runner.whole_workload_queries.keys())
+        rng.shuffle(whole_query_keys)
+
+        selected_keys = []
+        selected_cost = 0.0
+        for key in whole_query_keys:
+            query_cost = self.runner.time_dict[key]
+            if selected_cost + query_cost <= time_budget:
+                selected_keys.append(key)
+                selected_cost += query_cost
+
+        # Keep the initialization non-empty even when comp_ratio is very small.
+        if not selected_keys and whole_query_keys:
+            fallback_key = min(whole_query_keys, key=lambda key: self.runner.time_dict[key])
+            selected_keys = [fallback_key]
+            selected_cost = self.runner.time_dict[fallback_key]
+
+        random_subset = {
+            key: self.runner.whole_workload_queries[key]
+            for key in selected_keys
+        }
+        print(
+            f"Random init subset (seed={seed}, comp_ratio={comp_ratio}, "
+            f"time_budget={time_budget}, selected_cost={selected_cost}): {list(random_subset.keys())}"
+        )
+        return random_subset
+
+    def get_init_sql(self, init_subset_method, workload_name, comp_ratio, seed=None):
+        init_subset_method = init_subset_method.lower()
+        if init_subset_method == "gsum":
+            return self.get_GSUM_init_sql(workload_name, comp_ratio)
+        if init_subset_method == "random":
+            return self.get_random_init_sql(comp_ratio, seed)
+        raise ValueError(f"Unsupported init_subset_method: {init_subset_method}")
 
     ################################################
     ##### 2. Code related to select new subset #####
