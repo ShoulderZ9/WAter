@@ -44,7 +44,7 @@ if __name__ == '__main__':
     target_knobs_path = "./knowledge_collection/postgres/target_knobs.txt"
 
     # read the target workload
-    workload_name = 'job'
+    workload_name = 'tpcds_select'
     workload_queries = dict()
     workload_path = os.path.join('workload', workload_name)
     sqls = os.listdir(workload_path)
