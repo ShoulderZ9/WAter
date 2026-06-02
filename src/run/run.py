@@ -20,7 +20,10 @@ def run_commands(commands):
         
         try:
             # 执行命令
-            result = subprocess.run(cmd, shell=True, check=True)
+            result = subprocess.run(
+                ["bash", "-o", "pipefail", "-lc", cmd],
+                check=True,
+            )
             print(f"✅ 命令执行成功")
         except subprocess.CalledProcessError as e:
             print(f"❌ 命令执行失败 (返回码: {e.returncode})")
@@ -35,8 +38,8 @@ def main():
     # 在这里定义要执行的命令列表
     commands = [
         # water+smac gsum/random
-        "PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=732 | tee log732.txt",
-        "PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=733 | tee log733.txt",
+        "PYTHONPATH=src PYTHONUNBUFFERED=1 python3 -u src/run/WAter/run_smac.py -seed=735 | tee log735.txt",
+        "PYTHONPATH=src PYTHONUNBUFFERED=1 python3 -u src/run/WAter/run_smac.py -seed=736 | tee log736.txt",
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=729 | tee log729.txt",
 
         # water+gptuner gsum/random
