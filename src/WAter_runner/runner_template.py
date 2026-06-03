@@ -84,22 +84,6 @@ class RunnerTemplate(ABC):
         with open(self.record_single_path, 'w') as f:
             json.dump(self.single_dict, f, indent=4)
 
-    def load_runhistory_cost_map(self, runhistory_path=None):
-        if runhistory_path is None:
-            runhistory_path = self.cur_tuner.runhistory_path
-
-        with open(runhistory_path, 'r') as f:
-            runhistory = json.load(f)
-
-        cost_map = {}
-        for trial in runhistory.get("data", []):
-            config_id = str(trial.get("config_id"))
-            if config_id == "None":
-                continue
-            cost_map[config_id] = trial.get("cost")
-
-        return cost_map
-
     def get_knob_type(self):
         num_knobs = []
         cat_knobs = []

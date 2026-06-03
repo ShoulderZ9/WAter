@@ -16,10 +16,8 @@ class ConfigVerifier:
 
     def select_round_to_run(self):
         self.runner.update_single_dict()
-        runhistory_cost_map = self.runner.load_runhistory_cost_map()
-        missing_rounds = [i for i in self.runner.success_run_last if i not in runhistory_cost_map]
-        if missing_rounds:
-            print(f"Warning: missing runhistory cost for rounds {missing_rounds}, skip them in verifier selection.")
+        with open(self.runner.cur_tuner.runhistory_path, 'r') as f:
+            runhistory = json.load(f)
         
         epsilon = 0.5
         if random.random() <= epsilon:
@@ -27,16 +25,11 @@ class ConfigVerifier:
             self.rf_update()
             X, _ = self.get_rf_predict_data()
             rf_score = self.rf.predict(X)
-            rf_score_map = {idx: score for idx, score in zip(self.runner.success_run_last, rf_score)}
 
-            whole_score = {
-                idx: rf_score_map[idx] * (1 - self.runner.comp_ratio)
-                for idx in self.runner.success_run_last
-                if idx in runhistory_cost_map
-            }
-            for i in list(whole_score.keys()):
-                whole_score[i] += runhistory_cost_map[i] * self.runner.comp_ratio
-                if runhistory_cost_map[i] > threshold:
+            whole_score = {idx:score*(1 - self.runner.comp_ratio) for idx, score in zip(self.runner.success_run_last, rf_score)}
+            for i in self.runner.success_run_last:
+                whole_score[i] += runhistory["data"][int(i)-1]["cost"] * self.runner.comp_ratio
+                if runhistory["data"][int(i)-1]["cost"] > threshold:
                     print(f"Exploitation route eliminate round {i}")
                     del whole_score[i]
             
@@ -49,21 +42,12 @@ class ConfigVerifier:
             self.rf_update()
             X, _ = self.get_rf_predict_data()
             uncertainty_scores = self.uncertainty_scores(X)
-            sim_score_map = {idx: sim_score for idx, sim_score in zip(self.runner.success_run_last, sim_scores)}
-            uncertainty_score_map = {
-                idx: uncertainty_score
-                for idx, uncertainty_score in zip(self.runner.success_run_last, uncertainty_scores)
-            }
 
             r = len(X_unknown)/(len(X_known) + len(X_unknown))
-            whole_score = {
-                idx: r * (1 - sim_score_map[idx]) + (1 - r) * uncertainty_score_map[idx]
-                for idx in self.runner.success_run_last
-                if idx in runhistory_cost_map
-            }
+            whole_score = {idx:r*(1 - sim_score)+(1-r)*uncertainty_score for idx, sim_score, uncertainty_score in zip(self.runner.success_run_last, sim_scores, uncertainty_scores)}
             whole_score = {k:-v for k, v in whole_score.items()}
-            for i in list(whole_score.keys()):
-                if runhistory_cost_map[i] > threshold:
+            for i in self.runner.success_run_last:
+                if runhistory["data"][int(i)-1]["cost"] > threshold:
                     print(f"Exploration route eliminate round {i}")
                     del whole_score[i]
             print(f"whole_score:{whole_score}")

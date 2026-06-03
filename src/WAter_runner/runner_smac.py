@@ -54,19 +54,12 @@ class RunnerSMAC(RunnerTemplate):
             self.update_single_dict()
             if self.cur_stage == 1:
                 # choose the top-k configurations that perform well on current subset to verify on the whole workload
-                runhistory_cost_map = self.load_runhistory_cost_map()
+                with open(self.cur_tuner.runhistory_path, 'r') as f:
+                    runhistory_data = json.load(f)["data"]
                 self.success_run_last = [k for k, v in self.single_dict["data"].items() if self.timeout * 1000 not in v.values()]
-                missing_rounds = [k for k in self.success_run_last if k not in runhistory_cost_map]
-                if missing_rounds:
-                    print(f"Warning: missing runhistory cost for rounds {missing_rounds}, skip them in stage-1 verification.")
-                self.success_run_last = [k for k in self.success_run_last if k in runhistory_cost_map]
-                self.success_run_last = sorted(self.success_run_last, key=lambda k: runhistory_cost_map[k])
-                self.exec_whole_last = [
-                    config
-                    for config in self.success_run_last[:int(len(self.success_run_last) * self.verify_ratio)]
-                    if runhistory_cost_map[config] <= self.subset_default_score * 1.0 * 1000
-                ]
-                if str(16) not in self.exec_whole_last and str(16) in self.single_dict["data"]:
+                self.success_run_last = sorted(self.success_run_last, key=lambda k: runhistory_data[int(k)-1]["cost"])
+                self.exec_whole_last = [config for config in self.success_run_last[:int(len(self.success_run_last)*self.verify_ratio)] if runhistory_data[int(config)-1]["cost"] <= self.subset_default_score * 1.0 * 1000]
+                if str(16) not in self.exec_whole_last:
                     self.exec_whole_last.append(str(16))
                 self.exec_whole_idx.extend(self.exec_whole_last)
             else:
