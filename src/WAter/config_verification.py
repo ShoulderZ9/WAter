@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestRegressor
+from diagnostics import compact_config, log_event, memory_snapshot
 
 class ConfigVerifier:
     def __init__(self, runner):
@@ -206,27 +207,56 @@ class ConfigVerifier:
         for i in self.runner.exec_whole_last:
             dbms = self.runner.dbms
             configs = self.runner.single_dict["configs"][str(i)]
+            existing_queries = list(self.runner.single_dict["data"].get(str(i), {}).keys())
+            log_event(
+                f"verify config={i} start, existing_queries={existing_queries}, "
+                f"config={compact_config(configs)}, {memory_snapshot()}"
+            )
             dbms.set_config(configs)
+            log_event(f"verify config={i} dbms config applied, {memory_snapshot()}")
             for name, sql in self.runner.whole_workload_queries.items():
                 if name not in self.runner.single_dict["data"][str(i)]:
-                    print(f"Test {name} on configuration {i}")
+                    print(f"Test {name} on configuration {i}", flush=True)
                     timeout_seconds = self.runner.timeout - sum(list(self.runner.single_dict["data"][str(i)].values()))/1e3
                     timeout_seconds = max(0, timeout_seconds)
-                    print(f"Remaining time for current configuration: {timeout_seconds}")
-                    t = self.runner.get_sql_time_with_timeout(sql, timeout_seconds)
+                    current_cost = sum(list(self.runner.single_dict["data"][str(i)].values()))
+                    print(f"Remaining time for current configuration: {timeout_seconds}", flush=True)
+                    log_event(
+                        f"verify config={i} query={name} start, "
+                        f"current_cost_ms={current_cost:.3f}, timeout_seconds={timeout_seconds:.3f}, {memory_snapshot()}"
+                    )
+                    t = self.runner.get_sql_time_with_timeout(
+                        sql,
+                        timeout_seconds,
+                        query_name=name,
+                        config_id=i,
+                    )
+                    log_event(
+                        f"verify config={i} query={name} result_ms={t:.3f}, "
+                        f"timeout_ms={self.runner.timeout * 1000:.3f}, {memory_snapshot()}"
+                    )
                     if t == self.runner.timeout*1000:
                         if str(i) in self.runner.single_dict["data"]:
                             del self.runner.single_dict["data"][str(i)]
                         whole_to_remove.append(i)
-                        print(f"Configuration {i} is timeout and will be deleted from single.json")
+                        print(f"Configuration {i} is timeout and will be deleted from single.json", flush=True)
+                        log_event(f"verify config={i} query={name} timeout/delete, {memory_snapshot()}")
                         break
                     else:
                         self.runner.single_dict["data"][str(i)][name] = t
+                        log_event(
+                            f"verify config={i} query={name} saved, "
+                            f"new_total_ms={sum(list(self.runner.single_dict['data'][str(i)].values())):.3f}, {memory_snapshot()}"
+                        )
             
             if "cost" not in self.runner.single_dict:
                 self.runner.single_dict["cost"] = []
             if str(i) in self.runner.single_dict["data"]:
                 self.runner.single_dict["cost"].append({"round":str(i), "time": time.time()- self.runner.start_time, "cost":sum(list(self.runner.single_dict["data"][str(i)].values()))})
+                log_event(
+                    f"verify config={i} finish, whole_cost_ms={sum(list(self.runner.single_dict['data'][str(i)].values())):.3f}, "
+                    f"{memory_snapshot()}"
+                )
         
         for i in whole_to_remove:
             self.runner.exec_whole_last.remove(i)

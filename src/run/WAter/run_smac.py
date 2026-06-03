@@ -5,15 +5,22 @@ from vanilla_tuner.smactuner.smactuner import SMACTuner
 from WAter_runner.runner_smac import RunnerSMAC
 
 if __name__ == '__main__':
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(line_buffering=True, write_through=True)
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(line_buffering=True, write_through=True)
+
     def get_time_dict(dbms, time_dict_path, whole_workload_queries):
         dbms.reset_config()
         dbms.reconfigure()
         time_dict = dict()
         for name, sql in whole_workload_queries.items():
+            print(f"[time_dict] start {name}", flush=True)
             start_time = time.time()
             dbms.exec_queries(sql)
             t = time.time() - start_time
             time_dict[name] = t
+            print(f"[time_dict] done {name}: {t:.3f}s", flush=True)
         with open(time_dict_path, 'w') as f:
             json.dump(time_dict, f, indent=4)
         return time_dict

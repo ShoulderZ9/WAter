@@ -15,7 +15,12 @@ class HistoryReuser:
                         timeout_seconds = self.runner.timeout - sum([v for k, v in self.runner.single_dict["data"][str(i)].items()])/1e3
                         timeout_seconds = max(timeout_seconds, 0)
                         print(f"Remaining time for current configuration: {timeout_seconds}")
-                        t = self.runner.get_sql_time_with_timeout(sql, timeout_seconds)
+                        t = self.runner.get_sql_time_with_timeout(
+                            sql,
+                            timeout_seconds,
+                            query_name=name,
+                            config_id=i,
+                        )
 
                         if t == self.runner.timeout*1000:
                             del self.runner.single_dict["data"][str(i)]

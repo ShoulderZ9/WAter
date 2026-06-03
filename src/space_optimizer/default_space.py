@@ -11,6 +11,7 @@ import time
 import functools
 import multiprocessing
 import concurrent.futures
+from diagnostics import compact_config, log_event, memory_snapshot
 from ConfigSpace import (
     ConfigurationSpace,
     UniformIntegerHyperparameter,
@@ -218,15 +219,23 @@ class DefaultSpace:
         result_queue = multiprocessing.Queue()
 
         def task_wrapper():
-            print("HHH")
-            result = self.run_sqls()
-            result_queue.put(result)
+            try:
+                log_event(f"workload child start round={self.round}, {memory_snapshot()}")
+                result = self.run_sqls()
+                log_event(f"workload child finish round={self.round}, result={result}, {memory_snapshot()}")
+                result_queue.put(result)
+            except BaseException as e:
+                log_event(f"workload child exception round={self.round}: {repr(e)}, {memory_snapshot()}")
+                result_queue.put(self.timeout * 1000.0)
 
         p = multiprocessing.Process(target=task_wrapper)
+        log_event(f"start workload process round={self.round}, timeout_seconds={timeout_seconds}, {memory_snapshot()}")
         p.start()
+        log_event(f"workload process pid={p.pid} started round={self.round}")
         p.join(timeout_seconds)
 
         if p.is_alive():
+            log_event(f"workload process timeout round={self.round}, pid={p.pid}, terminate, {memory_snapshot()}")
             p.terminate()
             p.join()
             if not result_queue.empty():
@@ -235,6 +244,12 @@ class DefaultSpace:
                 sql_exec_time = self.timeout * 1000.0
             return sql_exec_time
         else:
+            if result_queue.empty():
+                log_event(
+                    f"workload process ended without result round={self.round}, "
+                    f"pid={p.pid}, exitcode={p.exitcode}, treat as timeout, {memory_snapshot()}"
+                )
+                return self.timeout * 1000.0
             return result_queue.get()
         
     def test(self, sql):
@@ -253,6 +268,10 @@ class DefaultSpace:
         dbms = self.dbms
         sql_exec_time = 0
         timeout_cost = self.timeout * 1000.0
+        log_event(
+            f"run_sqls begin round={self.round}, "
+            f"queries={list(self.workload_queries.keys())}, config={compact_config(dbms.config)}, {memory_snapshot()}"
+        )
 
         if os.path.exists(self.record_single_path):
             with open(self.record_single_path, 'r') as f:
@@ -266,25 +285,40 @@ class DefaultSpace:
         for (j, sql) in self.workload_queries.items():
             if j in result["data"][self.round]:
                 continue
+            elapsed_before = time.time() - start_run_time
+            log_event(
+                f"round={self.round} query={j} start, "
+                f"elapsed_before={elapsed_before:.3f}s, accumulated_ms={sql_exec_time:.3f}, {memory_snapshot()}"
+            )
             t = self.test(sql)
-            print(f"TIME{j}:{t}")
+            elapsed_after = time.time() - start_run_time
+            print(f"TIME{j}:{t}", flush=True)
+            log_event(
+                f"round={self.round} query={j} done, query_ms={t:.3f}, "
+                f"elapsed_total={elapsed_after:.3f}s, accumulated_ms={sql_exec_time + t:.3f}, {memory_snapshot()}"
+            )
             result["data"][self.round][j] = t
             sql_exec_time += t
             
             # 如果 SQL 执行失败（返回 timeout），跳过后续 SQL，直接返回 timeout 作为这一轮 cost
             if t >= timeout_cost:
-                print(f"SQL {j} failed (timeout/error), skipping remaining SQLs...")
+                print(f"SQL {j} failed (timeout/error), skipping remaining SQLs...", flush=True)
+                log_event(f"round={self.round} query={j} failed_or_timeout, {memory_snapshot()}")
                 with open(self.record_single_path, 'w') as f:
                     json.dump(result, f, indent=4)
-                    print(f"SAVE: {self.round}")
-                    print(self.record_single_path)
+                    print(f"SAVE: {self.round}", flush=True)
+                    print(self.record_single_path, flush=True)
                 return timeout_cost
 
         with open(self.record_single_path, 'w') as f:
             json.dump(result, f, indent=4)
-            print(f"SAVE: {self.round}")
-            print(self.record_single_path)
+            print(f"SAVE: {self.round}", flush=True)
+            print(self.record_single_path, flush=True)
         actual_run_time = time.time() - start_run_time
+        log_event(
+            f"run_sqls finish round={self.round}, actual_run_time={actual_run_time:.3f}s, "
+            f"sql_exec_time_ms={sql_exec_time:.3f}, {memory_snapshot()}"
+        )
 
         return sql_exec_time
 
@@ -320,7 +354,11 @@ class DefaultSpace:
             dbms.set_knob(knob, value)
             
         if dbms.reconfigure():
-            print("----- Executing workload on current configuration -----")
+            print("----- Executing workload on current configuration -----", flush=True)
+            log_event(
+                f"round={self.round} executing workload, timeout={self.timeout}, "
+                f"config={compact_config(dbms.config)}, {memory_snapshot()}"
+            )
             total_sql_exec_time = self.run_sql_with_timeout(self.timeout)
 
             return total_sql_exec_time

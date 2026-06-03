@@ -4,6 +4,7 @@ from WAter.workload_compression import WorkloadCompressor
 from WAter.config_verification import ConfigVerifier
 from WAter.history_reuse import HistoryReuser
 import configparser
+from diagnostics import log_event, memory_snapshot
 
 class RunnerTemplate(ABC):
     def __init__(self, tuner, dbms, timeout, target_knobs_path, seed, whole_workload_queries, workload_name):
@@ -105,32 +106,53 @@ class RunnerTemplate(ABC):
         # quit()
         return num_knobs, cat_knobs
 
-    def get_sql_time_with_timeout(self, sql, timeout_seconds):
+    def get_sql_time_with_timeout(self, sql, timeout_seconds, query_name=None, config_id=None):
         result_queue = multiprocessing.Queue()
+        label = f"config={config_id}, query={query_name}"
+
         def task_wrapper(sql):
-            result = self.get_sql_time(sql)
-            print(f"RESULT:{result}")
-            result_queue.put(result)
+            try:
+                log_event(f"verify child start {label}, {memory_snapshot()}")
+                result = self.get_sql_time(sql, query_name=query_name, config_id=config_id)
+                print(f"RESULT:{result}", flush=True)
+                log_event(f"verify child finish {label}, result={result}, {memory_snapshot()}")
+                result_queue.put(result)
+            except BaseException as e:
+                log_event(f"verify child exception {label}: {repr(e)}, {memory_snapshot()}")
+                result_queue.put(self.timeout * 1000.0)
 
         p = multiprocessing.Process(target=task_wrapper, args=(sql,))
+        log_event(f"start verify process {label}, timeout_seconds={timeout_seconds}, {memory_snapshot()}")
         p.start()
+        log_event(f"verify process pid={p.pid} started {label}")
         p.join(timeout_seconds)
         if p.is_alive():
+            log_event(f"verify process timeout {label}, pid={p.pid}, terminate, {memory_snapshot()}")
             p.terminate()
             p.join() 
             return self.timeout * 1000.0
         else:
+            if result_queue.empty():
+                log_event(
+                    f"verify process ended without result {label}, "
+                    f"pid={p.pid}, exitcode={p.exitcode}, treat as timeout, {memory_snapshot()}"
+                )
+                return self.timeout * 1000.0
             return result_queue.get()
 
-    def get_sql_time(self, sql):
+    def get_sql_time(self, sql, query_name=None, config_id=None):
         dbms = self.dbms
+        label = f"config={config_id}, query={query_name}"
+        log_event(f"exec verify sql start {label}, {memory_snapshot()}")
         start_ms = time.time() * 1000.0
         flag = dbms.exec_queries(sql)
         end_ms = time.time() * 1000.0
         execution_time = end_ms - start_ms
         if flag: 
+            log_event(f"exec verify sql done {label}, execution_ms={execution_time:.3f}, {memory_snapshot()}")
             return execution_time
         else:
+            log_event(f"exec verify sql failed {label}, return timeout, {memory_snapshot()}")
             return self.timeout * 1000.0
 
     @abstractmethod
