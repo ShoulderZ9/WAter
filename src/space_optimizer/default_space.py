@@ -340,7 +340,6 @@ class DefaultSpace:
         print(f"Tuning round {self.round} ...")
         print(f"--- Restore the dbms to default configuration ---")
         dbms.reset_config()
-        dbms.reconfigure()
 
         for knob in self.target_knobs:
             try:

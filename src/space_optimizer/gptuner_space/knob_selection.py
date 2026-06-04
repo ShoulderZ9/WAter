@@ -24,7 +24,6 @@ class KnobSelection(GPT):
             print(f"Knobs already selected for {self.db}")
         else:
             self.candidate_knobs = self.get_candidate_konbs()
-        
     def get_candidate_konbs(self):
         knobs = []
         with open(self.system_view_dir, 'r') as file:
@@ -105,7 +104,6 @@ class KnobSelection(GPT):
             target_path = "./optimization_results/temp_results"
             print(f"--- Restore the dbms to default configuration ---")
             self.dbms.reset_config()
-            self.dbms.reconfigure()
             runner = BenchbaseRunner(dbms=self.dbms, test=self.benchmark, target_path=target_path)
             runner.clear_summary_dir()
             t = threading.Thread(target=runner.run_benchmark)
@@ -189,6 +187,5 @@ class KnobSelection(GPT):
         with open(self.target_knobs_dir, 'w') as file:
             for line in selected_knobs:
                 file.write(line + "\n")
-                
+
         return selected_knobs
-        
