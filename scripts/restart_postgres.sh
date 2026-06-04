@@ -10,7 +10,7 @@ PG_CLUSTER_NAME="${PG_CLUSTER_NAME:-main}"
 POSTGRES_RESTART_LOCK="${POSTGRES_RESTART_LOCK:-/tmp/water_postgres_restart.lock}"
 
 if command -v flock >/dev/null 2>&1 && [ -z "${WATER_POSTGRES_RESTART_LOCKED:-}" ]; then
-    exec env WATER_POSTGRES_RESTART_LOCKED=1 flock -w "${PG_CTL_TIMEOUT}" "${POSTGRES_RESTART_LOCK}" "$0" "$@"
+    exec env WATER_POSTGRES_RESTART_LOCKED=1 flock -w "${PG_CTL_TIMEOUT}" "${POSTGRES_RESTART_LOCK}" sh "$0" "$@"
 fi
 
 restart_with_custom_cmd() {
