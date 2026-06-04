@@ -1,4 +1,4 @@
-import time, random, json
+import time, random, json, numbers
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
@@ -10,6 +10,7 @@ class ConfigVerifier:
     def __init__(self, runner):
         self.runner = runner
         self.rf = RandomForestRegressor(n_estimators=200)
+        self.missing_config_value_log = set()
     
     ########################################################################
     ##### 1. Code related to select promising configurations to verify #####
@@ -99,6 +100,52 @@ class ConfigVerifier:
         X, Y = self.get_rf_train_data()
         self.rf.fit(X, Y["cost"])
 
+    def get_config_value(self, config_id, knob):
+        configs = self.runner.single_dict["configs"]
+        config = configs.get(str(config_id), configs.get(config_id, {}))
+
+        control_key = f"control_{knob}"
+        special_key = f"special_{knob}"
+        control_para = config.get(control_key)
+        if control_para == "1" and special_key in config:
+            return config[special_key]
+        if knob in config:
+            return config[knob]
+        if special_key in config:
+            return config[special_key]
+
+        default_value = self.get_default_knob_value(knob)
+        missing_key = (str(config_id), knob)
+        if missing_key not in self.missing_config_value_log:
+            self.missing_config_value_log.add(missing_key)
+            print(f"Config {config_id} misses knob {knob}; use default value {default_value}")
+        return default_value
+
+    def get_default_knob_value(self, knob):
+        info = self.runner.dbms.knob_info.get(knob, {})
+        for key in ("reset_val", "setting", "boot_val", "min_val"):
+            value = info.get(key)
+            if value is not None:
+                return value
+        return 0
+
+    def append_config_values(self, X, config_id):
+        for knob in self.runner.target_knobs:
+            X[knob].append(self.get_config_value(config_id, knob))
+
+    def normalize_feature_frame(self, X):
+        X = X.copy()
+        for knob in self.runner.num_knobs:
+            X[knob] = pd.to_numeric(X[knob], errors="coerce")
+            if X[knob].isna().any():
+                default_value = pd.to_numeric(self.get_default_knob_value(knob), errors="coerce")
+                if pd.isna(default_value):
+                    default_value = 0
+                X[knob] = X[knob].fillna(default_value)
+        for knob in self.runner.cat_knobs:
+            X[knob] = X[knob].astype(str)
+        return X
+
     def get_rf_train_data(self):
         self.runner.update_single_dict()
 
@@ -106,19 +153,9 @@ class ConfigVerifier:
         Y = {"cost":[]}
 
         for i in self.runner.exec_whole_idx:
-            for knob in self.runner.target_knobs:
-                try:
-                    control_para = self.runner.single_dict["configs"][i][f"control_{knob}"]
-                    if control_para == "0":
-                        value = self.runner.single_dict["configs"][i][knob]       
-                    elif control_para == "1":
-                        value = self.runner.single_dict["configs"][i][f"special_{knob}"]
-                except:
-                    value = self.runner.single_dict["configs"][i][knob]
-                X[knob].append(value)
-            
+            self.append_config_values(X, i)
             Y["cost"].append(sum(list(self.runner.single_dict["data"][str(i)].values())))
-        X = pd.DataFrame(X)
+        X = self.normalize_feature_frame(pd.DataFrame(X))
         Y = pd.DataFrame(Y)
         self.get_preprocessor()
         X = self.preprocessor.transform(X)
@@ -134,19 +171,9 @@ class ConfigVerifier:
         Y = {"cost":[]}
 
         for i in self.runner.success_run_last:
-            for knob in self.runner.target_knobs:
-                try:
-                    control_para = self.runner.single_dict["configs"][i][f"control_{knob}"]
-                    if control_para == "0":
-                        value = self.runner.single_dict["configs"][i][knob] 
-                    elif control_para == "1":
-                        value = self.runner.single_dict["configs"][i][f"special_{knob}"]
-                except:
-                    value = self.runner.single_dict["configs"][i][knob]
-                X[knob].append(value)
-
+            self.append_config_values(X, i)
             Y["cost"].append(sum(list(self.runner.single_dict["data"][str(i)].values())))
-        X = pd.DataFrame(X)
+        X = self.normalize_feature_frame(pd.DataFrame(X))
         Y = pd.DataFrame(Y)
         self.get_preprocessor()
         X = self.preprocessor.transform(X)
@@ -173,34 +200,14 @@ class ConfigVerifier:
         Y = {"cost":[]}
 
         for i in self.runner.exec_whole_idx:
-            for knob in self.runner.target_knobs:
-                try:
-                    control_para = self.runner.single_dict["configs"][i][f"control_{knob}"]
-                    if control_para == "0":
-                        value = self.runner.single_dict["configs"][i][knob]       
-                    elif control_para == "1":
-                        value = self.runner.single_dict["configs"][i][f"special_{knob}"]
-                except:
-                    value = self.runner.single_dict["configs"][i][knob]
-                X_known[knob].append(value)
-                
+            self.append_config_values(X_known, i)
             Y["cost"].append(sum(list(self.runner.single_dict["data"][str(i)].values())))
-        X_known = pd.DataFrame(X_known)
+        X_known = self.normalize_feature_frame(pd.DataFrame(X_known))
 
         for i in self.runner.success_run_last:
-            for knob in self.runner.target_knobs:
-                try:
-                    control_para = self.runner.single_dict["configs"][i][f"control_{knob}"]
-                    if control_para == "0":
-                        value = self.runner.single_dict["configs"][i][knob]       
-                    elif control_para == "1":
-                        value = self.runner.single_dict["configs"][i][f"special_{knob}"]
-                except:
-                    value = self.runner.single_dict["configs"][i][knob]
-                X_unknown[knob].append(value)
-                
+            self.append_config_values(X_unknown, i)
             Y["cost"].append(sum(list(self.runner.single_dict["data"][str(i)].values())))    
-        X_unknown = pd.DataFrame(X_unknown)
+        X_unknown = self.normalize_feature_frame(pd.DataFrame(X_unknown))
 
         return X_known, X_unknown
 
@@ -222,8 +229,10 @@ class ConfigVerifier:
         sum_dist = 0.0
 
         for i in range(n_features):
-            if isinstance(x1[i], (int, float)) and isinstance(x2[i], (int, float)):  # Continuous variable
-                sum_dist += abs(x1[i] - x2[i]) / (max_values[i] - min_values[i])
+            if isinstance(x1[i], numbers.Number) and isinstance(x2[i], numbers.Number):  # Continuous variable
+                value_range = max_values[i] - min_values[i]
+                if value_range != 0:
+                    sum_dist += abs(x1[i] - x2[i]) / value_range
             else:  # Categorical variable
                 sum_dist += 0 if x1[i] == x2[i] else 1
 
