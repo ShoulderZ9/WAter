@@ -7,6 +7,23 @@ import configparser
 from diagnostics import log_event, memory_snapshot
 
 class RunnerTemplate(ABC):
+    SCORING_MODE_ALIASES = {
+        "hybrid": "hybrid",
+        "water-full": "hybrid",
+        "water_full": "hybrid",
+        "waterfull": "hybrid",
+        "full": "hybrid",
+        "subset-only": "subset-only",
+        "subset_only": "subset-only",
+        "subset": "subset-only",
+        "exploitation-only": "exploitation-only",
+        "exploitation_only": "exploitation-only",
+        "exploitation": "exploitation-only",
+        "exploration-only": "exploration-only",
+        "exploration_only": "exploration-only",
+        "exploration": "exploration-only",
+    }
+
     def __init__(self, tuner, dbms, timeout, target_knobs_path, seed, whole_workload_queries, workload_name):
         self.dbms = dbms
         self.seed = seed
@@ -64,6 +81,14 @@ class RunnerTemplate(ABC):
         self.success_per_stage = config.getint('WATER', 'success_per_stage')
         self.update_threshold = config.getint('WATER', 'update_threshold')
         self.comp_ratio_add_unit = config.getfloat('WATER', 'comp_ratio_add_unit')
+        scoring_mode = config.get('WATER', 'scoring_mode', fallback='hybrid').strip().lower()
+        self.scoring_mode = self.SCORING_MODE_ALIASES.get(scoring_mode)
+        if self.scoring_mode is None:
+            supported_modes = ", ".join(sorted(set(self.SCORING_MODE_ALIASES.values())))
+            raise ValueError(
+                f"Unsupported scoring_mode: {scoring_mode}. "
+                f"Supported modes: {supported_modes}."
+            )
 
         print("--- WAter's hyperparameters have been initialized successfully ---")
         print(f"{'Parameter':<20}{'Value':<10}")
@@ -75,6 +100,7 @@ class RunnerTemplate(ABC):
         print(f"{'success_per_stage':<20}{self.success_per_stage:<10}")
         print(f"{'update_threshold':<20}{self.update_threshold:<10}")
         print(f"{'comp_ratio_add_unit':<20}{self.comp_ratio_add_unit:<10}")
+        print(f"{'scoring_mode':<20}{self.scoring_mode:<10}")
         print("------------------------------------------------------------------")
 
     def update_single_dict(self):

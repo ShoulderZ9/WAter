@@ -19,43 +19,81 @@ class ConfigVerifier:
         self.runner.update_single_dict()
         with open(self.runner.cur_tuner.runhistory_path, 'r') as f:
             runhistory = json.load(f)
-        
-        epsilon = 0.5
-        if random.random() <= epsilon:
-            threshold = self.runner.subset_default_score * 1.0 * 1000
-            self.rf_update()
-            X, _ = self.get_rf_predict_data()
-            rf_score = self.rf.predict(X)
 
-            whole_score = {idx:score*(1 - self.runner.comp_ratio) for idx, score in zip(self.runner.success_run_last, rf_score)}
-            for i in self.runner.success_run_last:
-                whole_score[i] += runhistory["data"][int(i)-1]["cost"] * self.runner.comp_ratio
-                if runhistory["data"][int(i)-1]["cost"] > threshold:
-                    print(f"Exploitation route eliminate round {i}")
-                    del whole_score[i]
-            
-            print(f"whole_score:{whole_score}")
+        scoring_mode = getattr(self.runner, "scoring_mode", "hybrid")
+        print(f"scoring_mode: {scoring_mode}")
+
+        if scoring_mode == "subset-only":
+            whole_score = self.subset_only_score(runhistory)
+        elif scoring_mode == "exploitation-only":
+            whole_score = self.exploitation_score(runhistory)
+        elif scoring_mode == "exploration-only":
+            whole_score = self.exploration_score(runhistory)
+        elif scoring_mode == "hybrid":
+            whole_score = self.hybrid_score(runhistory)
         else:
-            threshold = self.runner.subset_default_score * 1.2 * 1000
-            X_known, X_unknown = self.get_raw_X()
-            sim_scores = self.set_similarity(X_known, X_unknown)
+            raise ValueError(f"Unsupported scoring_mode: {scoring_mode}")
 
-            self.rf_update()
-            X, _ = self.get_rf_predict_data()
-            uncertainty_scores = self.uncertainty_scores(X)
-
-            r = len(X_unknown)/(len(X_known) + len(X_unknown))
-            whole_score = {idx:r*(1 - sim_score)+(1-r)*uncertainty_score for idx, sim_score, uncertainty_score in zip(self.runner.success_run_last, sim_scores, uncertainty_scores)}
-            whole_score = {k:-v for k, v in whole_score.items()}
-            for i in self.runner.success_run_last:
-                if runhistory["data"][int(i)-1]["cost"] > threshold:
-                    print(f"Exploration route eliminate round {i}")
-                    del whole_score[i]
-            print(f"whole_score:{whole_score}")
-        
         self.runner.exec_whole_last = sorted(whole_score, key=whole_score.get)[:min(int(self.runner.success_per_stage * self.runner.verify_ratio), len(whole_score))]
         print(f"exec_whole_last: {self.runner.exec_whole_last}")
         self.runner.exec_whole_idx.extend(self.runner.exec_whole_last)
+
+    def hybrid_score(self, runhistory):
+        epsilon = 0.5
+        if random.random() <= epsilon:
+            print("Hybrid scoring route: exploitation")
+            return self.exploitation_score(runhistory)
+        print("Hybrid scoring route: exploration")
+        return self.exploration_score(runhistory)
+
+    def subset_only_score(self, runhistory):
+        threshold = self.runner.subset_default_score * 1.0 * 1000
+        whole_score = {}
+        for i in self.runner.success_run_last:
+            subset_cost = runhistory["data"][int(i)-1]["cost"]
+            if subset_cost > threshold:
+                print(f"Subset-only route eliminate round {i}")
+                continue
+            whole_score[i] = subset_cost
+
+        print(f"whole_score:{whole_score}")
+        return whole_score
+
+    def exploitation_score(self, runhistory):
+        threshold = self.runner.subset_default_score * 1.0 * 1000
+        self.rf_update()
+        X, _ = self.get_rf_predict_data()
+        rf_score = self.rf.predict(X)
+
+        whole_score = {idx:score*(1 - self.runner.comp_ratio) for idx, score in zip(self.runner.success_run_last, rf_score)}
+        for i in self.runner.success_run_last:
+            subset_cost = runhistory["data"][int(i)-1]["cost"]
+            whole_score[i] += subset_cost * self.runner.comp_ratio
+            if subset_cost > threshold:
+                print(f"Exploitation route eliminate round {i}")
+                del whole_score[i]
+
+        print(f"whole_score:{whole_score}")
+        return whole_score
+
+    def exploration_score(self, runhistory):
+        threshold = self.runner.subset_default_score * 1.2 * 1000
+        X_known, X_unknown = self.get_raw_X()
+        sim_scores = self.set_similarity(X_known, X_unknown)
+
+        self.rf_update()
+        X, _ = self.get_rf_predict_data()
+        uncertainty_scores = self.uncertainty_scores(X)
+
+        r = len(X_unknown)/(len(X_known) + len(X_unknown))
+        whole_score = {idx:r*(1 - sim_score)+(1-r)*uncertainty_score for idx, sim_score, uncertainty_score in zip(self.runner.success_run_last, sim_scores, uncertainty_scores)}
+        whole_score = {k:-v for k, v in whole_score.items()}
+        for i in self.runner.success_run_last:
+            if runhistory["data"][int(i)-1]["cost"] > threshold:
+                print(f"Exploration route eliminate round {i}")
+                del whole_score[i]
+        print(f"whole_score:{whole_score}")
+        return whole_score
 
     def rf_update(self):
         X, Y = self.get_rf_train_data()

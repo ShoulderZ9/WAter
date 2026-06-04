@@ -76,35 +76,27 @@ class RunnerSMAC(RunnerTemplate):
                 print(f"total time: {time.time() - self.start_time}")
                 return
             
-            #####################################################################
-            ##### 4-5. Fixed initial subset mode: keep using the initial subset #####
-            #####################################################################
-            print(
-                f"Fixed subset mode: keep the initial {self.init_subset_method} subset with comp_ratio={self.comp_ratio}, "
-                "skip comp_ratio increase and subset reselection."
-            )
+            #################################################
+            ##### 4. Need to increase comp_ratio or not #####
+            #################################################
+            self.whole_time_lst = [sum([v1 for k1, v1 in v.items()]) for k, v in self.single_dict["data"].items() if k in self.exec_whole_idx]
+            self.cur_incumbent_cost = min(self.whole_time_lst)
+            print(f"Incumbent:{self.last_incumbent_cost, self.cur_incumbent_cost}")
 
-            # #################################################
-            # ##### 4. Need to increase comp_ratio or not #####
-            # #################################################
-            # self.whole_time_lst = [sum([v1 for k1, v1 in v.items()]) for k, v in self.single_dict["data"].items() if k in self.exec_whole_idx]
-            # self.cur_incumbent_cost = min(self.whole_time_lst)
-            # print(f"Incumbent:{self.last_incumbent_cost, self.cur_incumbent_cost}")
-            #
-            # if self.cur_incumbent_cost < self.last_incumbent_cost:
-            #     stage_to_run = self.update_threshold
-            #     self.last_incumbent_cost = self.cur_incumbent_cost
-            # else:
-            #     stage_to_run -= 1
-            #
-            # if stage_to_run == 0:
-            #     stage_to_run = self.update_threshold
-            #     self.comp_ratio += self.comp_ratio_add_unit
-            #     print(f"Increase workload comp_ratio from {self.comp_ratio - self.comp_ratio_add_unit} to {self.comp_ratio}")
-            #
-            # ##############################################################
-            # ##### 5. Obtain a new subset and fill in missing history #####
-            # ##############################################################
-            # self.cur_workload_queries = self.compressor.select_queries()
-            # self.cur_tuner.workload_queries = self.cur_workload_queries
-            # self.history_reuser.exec_selected_on_history()
+            if self.cur_incumbent_cost < self.last_incumbent_cost:
+                stage_to_run = self.update_threshold
+                self.last_incumbent_cost = self.cur_incumbent_cost
+            else:
+                stage_to_run -= 1
+
+            if stage_to_run == 0:
+                stage_to_run = self.update_threshold
+                self.comp_ratio += self.comp_ratio_add_unit
+                print(f"Increase workload comp_ratio from {self.comp_ratio - self.comp_ratio_add_unit} to {self.comp_ratio}")
+
+            ##############################################################
+            ##### 5. Obtain a new subset and fill in missing history #####
+            ##############################################################
+            self.cur_workload_queries = self.compressor.select_queries()
+            self.cur_tuner.workload_queries = self.cur_workload_queries
+            self.history_reuser.exec_selected_on_history()

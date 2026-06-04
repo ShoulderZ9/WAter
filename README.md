@@ -50,6 +50,7 @@ sudo pip install -r requirements.txt
 
 - Note: modify `configs/postgres.ini` to determine the target DBMS first, the `restart` and `recover` commands depend on the environment and we provide Docker version.
 - Note: modify `configs/water_params.ini` to determine WAter's hyper-parameters.
+- For scoring ablation, set `scoring_mode` in `configs/water_params.ini` to `hybrid`, `subset-only`, `exploitation-only`, or `exploration-only`. `water-full` is also accepted as an alias of `hybrid`.
 - Run WAter
 
 ```
