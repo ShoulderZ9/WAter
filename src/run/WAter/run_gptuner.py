@@ -8,6 +8,7 @@ from WAter_runner.runner_gptuner import RunnerGPTuner
 if __name__ == '__main__':
     def get_time_dict(dbms, time_dict_path, whole_workload_queries):
         dbms.reset_config()
+        dbms.reconfigure()
         time_dict = dict()
         for name, sql in whole_workload_queries.items():
             print(f"[time_dict] start {name}", flush=True)
@@ -15,7 +16,7 @@ if __name__ == '__main__':
             dbms.exec_queries(sql)
             t = time.time() - start_time
             time_dict[name] = t
-            print(f"[time_dict] done {name}: {t:.3f}s", flush=True)
+            print(f"[time_dict] start {name}", flush=True)
         with open(time_dict_path, 'w') as f:
             json.dump(time_dict, f, indent=4)
         return time_dict

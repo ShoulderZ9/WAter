@@ -7,6 +7,7 @@ from vanilla_tuner.gptuner.fine_stage import FineStage
 if __name__ == '__main__':
     def get_time_dict(dbms, time_dict_path, whole_workload_queries):
         dbms.reset_config()
+        dbms.reconfigure()
         time_dict = dict()
         for name, sql in whole_workload_queries.items():
             start_time = time.time()

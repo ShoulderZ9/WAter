@@ -1,7 +1,6 @@
 from dbms.dbms_template import DBMSTemplate
 import psycopg2
 import os
-import subprocess
 import time
 import json
 
@@ -62,9 +61,7 @@ class PgDBMS(DBMSTemplate):
             The configuration could make the dbms crash, so that maybe we need recovery operation.
         """
         self._disconnect()
-        restart_result = subprocess.run(self.restart_cmd, shell=True)
-        if restart_result.returncode != 0:
-            print(f"PostgreSQL restart command failed with return code {restart_result.returncode}")
+        os.system(self.restart_cmd)
         time.sleep(2)
         success = self._connect()
         if success:
@@ -156,6 +153,7 @@ class PgDBMS(DBMSTemplate):
     def set_config(self, configs):
         """"receive a dict of configs"""
         self.reset_config()
+        self.reconfigure()
         # customized workload, only support latency
         for knob, value in configs.items():
             self.set_knob(knob, value)

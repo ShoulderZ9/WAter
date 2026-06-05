@@ -10,7 +10,6 @@ class ConfigVerifier:
     def __init__(self, runner):
         self.runner = runner
         self.rf = RandomForestRegressor(n_estimators=200)
-        self.missing_config_value_log = set()
     
     ########################################################################
     ##### 1. Code related to select promising configurations to verify #####
@@ -20,131 +19,49 @@ class ConfigVerifier:
         self.runner.update_single_dict()
         with open(self.runner.cur_tuner.runhistory_path, 'r') as f:
             runhistory = json.load(f)
+        
+        epsilon = 0.5
+        if random.random() <= epsilon:
+            # exploit
+            threshold = self.runner.subset_default_score * 1.0 * 1000
+            self.rf_update()
+            X, _ = self.get_rf_predict_data()
+            rf_score = self.rf.predict(X)
 
-        scoring_mode = getattr(self.runner, "scoring_mode", "hybrid")
-        print(f"scoring_mode: {scoring_mode}")
-
-        if scoring_mode == "subset-only":
-            whole_score = self.subset_only_score(runhistory)
-        elif scoring_mode == "exploitation-only":
-            whole_score = self.exploitation_score(runhistory)
-        elif scoring_mode == "exploration-only":
-            whole_score = self.exploration_score(runhistory)
-        elif scoring_mode == "hybrid":
-            whole_score = self.hybrid_score(runhistory)
+            whole_score = {idx:score*(1 - self.runner.comp_ratio) for idx, score in zip(self.runner.success_run_last, rf_score)}
+            for i in self.runner.success_run_last:
+                whole_score[i] += runhistory["data"][int(i)-1]["cost"] * self.runner.comp_ratio
+                if runhistory["data"][int(i)-1]["cost"] > threshold:
+                    print(f"Exploitation route eliminate round {i}")
+                    del whole_score[i]
+            
+            print(f"whole_score:{whole_score}")
         else:
-            raise ValueError(f"Unsupported scoring_mode: {scoring_mode}")
+            # explore
+            threshold = self.runner.subset_default_score * 1.2 * 1000
+            X_known, X_unknown = self.get_raw_X()
+            sim_scores = self.set_similarity(X_known, X_unknown)
 
+            self.rf_update()
+            X, _ = self.get_rf_predict_data()
+            uncertainty_scores = self.uncertainty_scores(X)
+
+            r = len(X_unknown)/(len(X_known) + len(X_unknown))
+            whole_score = {idx:r*(1 - sim_score)+(1-r)*uncertainty_score for idx, sim_score, uncertainty_score in zip(self.runner.success_run_last, sim_scores, uncertainty_scores)}
+            whole_score = {k:-v for k, v in whole_score.items()}
+            for i in self.runner.success_run_last:
+                if runhistory["data"][int(i)-1]["cost"] > threshold:
+                    print(f"Exploration route eliminate round {i}")
+                    del whole_score[i]
+            print(f"whole_score:{whole_score}")
+        
         self.runner.exec_whole_last = sorted(whole_score, key=whole_score.get)[:min(int(self.runner.success_per_stage * self.runner.verify_ratio), len(whole_score))]
         print(f"exec_whole_last: {self.runner.exec_whole_last}")
         self.runner.exec_whole_idx.extend(self.runner.exec_whole_last)
 
-    def hybrid_score(self, runhistory):
-        epsilon = 0.5
-        if random.random() <= epsilon:
-            print("Hybrid scoring route: exploitation")
-            return self.exploitation_score(runhistory)
-        print("Hybrid scoring route: exploration")
-        return self.exploration_score(runhistory)
-
-    def subset_only_score(self, runhistory):
-        threshold = self.runner.subset_default_score * 1.0 * 1000
-        whole_score = {}
-        for i in self.runner.success_run_last:
-            subset_cost = runhistory["data"][int(i)-1]["cost"]
-            if subset_cost > threshold:
-                print(f"Subset-only route eliminate round {i}")
-                continue
-            whole_score[i] = subset_cost
-
-        print(f"whole_score:{whole_score}")
-        return whole_score
-
-    def exploitation_score(self, runhistory):
-        threshold = self.runner.subset_default_score * 1.0 * 1000
-        self.rf_update()
-        X, _ = self.get_rf_predict_data()
-        rf_score = self.rf.predict(X)
-
-        whole_score = {idx:score*(1 - self.runner.comp_ratio) for idx, score in zip(self.runner.success_run_last, rf_score)}
-        for i in self.runner.success_run_last:
-            subset_cost = runhistory["data"][int(i)-1]["cost"]
-            whole_score[i] += subset_cost * self.runner.comp_ratio
-            if subset_cost > threshold:
-                print(f"Exploitation route eliminate round {i}")
-                del whole_score[i]
-
-        print(f"whole_score:{whole_score}")
-        return whole_score
-
-    def exploration_score(self, runhistory):
-        threshold = self.runner.subset_default_score * 1.2 * 1000
-        X_known, X_unknown = self.get_raw_X()
-        sim_scores = self.set_similarity(X_known, X_unknown)
-
-        self.rf_update()
-        X, _ = self.get_rf_predict_data()
-        uncertainty_scores = self.uncertainty_scores(X)
-
-        r = len(X_unknown)/(len(X_known) + len(X_unknown))
-        whole_score = {idx:r*(1 - sim_score)+(1-r)*uncertainty_score for idx, sim_score, uncertainty_score in zip(self.runner.success_run_last, sim_scores, uncertainty_scores)}
-        whole_score = {k:-v for k, v in whole_score.items()}
-        for i in self.runner.success_run_last:
-            if runhistory["data"][int(i)-1]["cost"] > threshold:
-                print(f"Exploration route eliminate round {i}")
-                whole_score.pop(i, None)
-        print(f"whole_score:{whole_score}")
-        return whole_score
-
     def rf_update(self):
         X, Y = self.get_rf_train_data()
         self.rf.fit(X, Y["cost"])
-
-    def get_config_value(self, config_id, knob):
-        configs = self.runner.single_dict["configs"]
-        config = configs.get(str(config_id), configs.get(config_id, {}))
-
-        control_key = f"control_{knob}"
-        special_key = f"special_{knob}"
-        control_para = config.get(control_key)
-        if control_para == "1" and special_key in config:
-            return config[special_key]
-        if knob in config:
-            return config[knob]
-        if special_key in config:
-            return config[special_key]
-
-        default_value = self.get_default_knob_value(knob)
-        missing_key = (str(config_id), knob)
-        if missing_key not in self.missing_config_value_log:
-            self.missing_config_value_log.add(missing_key)
-            print(f"Config {config_id} misses knob {knob}; use default value {default_value}")
-        return default_value
-
-    def get_default_knob_value(self, knob):
-        info = self.runner.dbms.knob_info.get(knob, {})
-        for key in ("reset_val", "setting", "boot_val", "min_val"):
-            value = info.get(key)
-            if value is not None:
-                return value
-        return 0
-
-    def append_config_values(self, X, config_id):
-        for knob in self.runner.target_knobs:
-            X[knob].append(self.get_config_value(config_id, knob))
-
-    def normalize_feature_frame(self, X):
-        X = X.copy()
-        for knob in self.runner.num_knobs:
-            X[knob] = pd.to_numeric(X[knob], errors="coerce")
-            if X[knob].isna().any():
-                default_value = pd.to_numeric(self.get_default_knob_value(knob), errors="coerce")
-                if pd.isna(default_value):
-                    default_value = 0
-                X[knob] = X[knob].fillna(default_value)
-        for knob in self.runner.cat_knobs:
-            X[knob] = X[knob].astype(str)
-        return X
 
     def get_rf_train_data(self):
         self.runner.update_single_dict()
@@ -153,9 +70,19 @@ class ConfigVerifier:
         Y = {"cost":[]}
 
         for i in self.runner.exec_whole_idx:
-            self.append_config_values(X, i)
+            for knob in self.runner.target_knobs:
+                try:
+                    control_para = self.runner.single_dict["configs"][i][f"control_{knob}"]
+                    if control_para == "0":
+                        value = self.runner.single_dict["configs"][i][knob]       
+                    elif control_para == "1":
+                        value = self.runner.single_dict["configs"][i][f"special_{knob}"]
+                except:
+                    value = self.runner.single_dict["configs"][i][knob]
+                X[knob].append(value)
+            
             Y["cost"].append(sum(list(self.runner.single_dict["data"][str(i)].values())))
-        X = self.normalize_feature_frame(pd.DataFrame(X))
+        X = pd.DataFrame(X)
         Y = pd.DataFrame(Y)
         self.get_preprocessor()
         X = self.preprocessor.transform(X)
@@ -171,9 +98,19 @@ class ConfigVerifier:
         Y = {"cost":[]}
 
         for i in self.runner.success_run_last:
-            self.append_config_values(X, i)
+            for knob in self.runner.target_knobs:
+                try:
+                    control_para = self.runner.single_dict["configs"][i][f"control_{knob}"]
+                    if control_para == "0":
+                        value = self.runner.single_dict["configs"][i][knob] 
+                    elif control_para == "1":
+                        value = self.runner.single_dict["configs"][i][f"special_{knob}"]
+                except:
+                    value = self.runner.single_dict["configs"][i][knob]
+                X[knob].append(value)
+
             Y["cost"].append(sum(list(self.runner.single_dict["data"][str(i)].values())))
-        X = self.normalize_feature_frame(pd.DataFrame(X))
+        X = pd.DataFrame(X)
         Y = pd.DataFrame(Y)
         self.get_preprocessor()
         X = self.preprocessor.transform(X)
@@ -200,21 +137,38 @@ class ConfigVerifier:
         Y = {"cost":[]}
 
         for i in self.runner.exec_whole_idx:
-            self.append_config_values(X_known, i)
+            for knob in self.runner.target_knobs:
+                try:
+                    control_para = self.runner.single_dict["configs"][i][f"control_{knob}"]
+                    if control_para == "0":
+                        value = self.runner.single_dict["configs"][i][knob]       
+                    elif control_para == "1":
+                        value = self.runner.single_dict["configs"][i][f"special_{knob}"]
+                except:
+                    value = self.runner.single_dict["configs"][i][knob]
+                X_known[knob].append(value)
+                
             Y["cost"].append(sum(list(self.runner.single_dict["data"][str(i)].values())))
-        X_known = self.normalize_feature_frame(pd.DataFrame(X_known))
+        X_known = pd.DataFrame(X_known)
 
         for i in self.runner.success_run_last:
-            self.append_config_values(X_unknown, i)
+            for knob in self.runner.target_knobs:
+                try:
+                    control_para = self.runner.single_dict["configs"][i][f"control_{knob}"]
+                    if control_para == "0":
+                        value = self.runner.single_dict["configs"][i][knob]       
+                    elif control_para == "1":
+                        value = self.runner.single_dict["configs"][i][f"special_{knob}"]
+                except:
+                    value = self.runner.single_dict["configs"][i][knob]
+                X_unknown[knob].append(value)
+                
             Y["cost"].append(sum(list(self.runner.single_dict["data"][str(i)].values())))    
-        X_unknown = self.normalize_feature_frame(pd.DataFrame(X_unknown))
+        X_unknown = pd.DataFrame(X_unknown)
 
         return X_known, X_unknown
 
     def set_similarity(self, X_known, X_unknown):
-        if X_known.empty:
-            return [0.0 for _ in range(X_unknown.shape[0])]
-
         min_values = X_known[self.runner.num_knobs].min()
         max_values = X_known[self.runner.num_knobs].max()
         sims = []
@@ -228,18 +182,14 @@ class ConfigVerifier:
         return sims
     
     def similarity_func(self, x1, x2, min_values, max_values):
-        n_features = len(self.runner.target_knobs)
+        n_features = len(x1)
         sum_dist = 0.0
 
-        for knob in self.runner.target_knobs:
-            value_1 = x1[knob]
-            value_2 = x2[knob]
-            if knob in self.runner.num_knobs:
-                value_range = max_values[knob] - min_values[knob]
-                if value_range != 0:
-                    sum_dist += abs(value_1 - value_2) / value_range
+        for i in range(n_features):
+            if isinstance(x1[i], (int, float)) and isinstance(x2[i], (int, float)):  # Continuous variable
+                sum_dist += abs(x1[i] - x2[i]) / (max_values[i] - min_values[i])
             else:  # Categorical variable
-                sum_dist += 0 if value_1 == value_2 else 1
+                sum_dist += 0 if x1[i] == x2[i] else 1
 
         return  n_features / (sum_dist + n_features)
     

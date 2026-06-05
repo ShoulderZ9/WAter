@@ -7,23 +7,6 @@ import configparser
 from diagnostics import log_event, memory_snapshot
 
 class RunnerTemplate(ABC):
-    SCORING_MODE_ALIASES = {
-        "hybrid": "hybrid",
-        "water-full": "hybrid",
-        "water_full": "hybrid",
-        "waterfull": "hybrid",
-        "full": "hybrid",
-        "subset-only": "subset-only",
-        "subset_only": "subset-only",
-        "subset": "subset-only",
-        "exploitation-only": "exploitation-only",
-        "exploitation_only": "exploitation-only",
-        "exploitation": "exploitation-only",
-        "exploration-only": "exploration-only",
-        "exploration_only": "exploration-only",
-        "exploration": "exploration-only",
-    }
-
     def __init__(self, tuner, dbms, timeout, target_knobs_path, seed, whole_workload_queries, workload_name):
         self.dbms = dbms
         self.seed = seed
@@ -81,14 +64,6 @@ class RunnerTemplate(ABC):
         self.success_per_stage = config.getint('WATER', 'success_per_stage')
         self.update_threshold = config.getint('WATER', 'update_threshold')
         self.comp_ratio_add_unit = config.getfloat('WATER', 'comp_ratio_add_unit')
-        scoring_mode = config.get('WATER', 'scoring_mode', fallback='hybrid').strip().lower()
-        self.scoring_mode = self.SCORING_MODE_ALIASES.get(scoring_mode)
-        if self.scoring_mode is None:
-            supported_modes = ", ".join(sorted(set(self.SCORING_MODE_ALIASES.values())))
-            raise ValueError(
-                f"Unsupported scoring_mode: {scoring_mode}. "
-                f"Supported modes: {supported_modes}."
-            )
 
         print("--- WAter's hyperparameters have been initialized successfully ---")
         print(f"{'Parameter':<20}{'Value':<10}")
@@ -100,7 +75,6 @@ class RunnerTemplate(ABC):
         print(f"{'success_per_stage':<20}{self.success_per_stage:<10}")
         print(f"{'update_threshold':<20}{self.update_threshold:<10}")
         print(f"{'comp_ratio_add_unit':<20}{self.comp_ratio_add_unit:<10}")
-        print(f"{'scoring_mode':<20}{self.scoring_mode:<10}")
         print("------------------------------------------------------------------")
 
     def update_single_dict(self):
@@ -138,8 +112,6 @@ class RunnerTemplate(ABC):
 
         def task_wrapper(sql):
             try:
-                self.dbms._disconnect()
-                self.dbms._connect()
                 log_event(f"verify child start {label}, {memory_snapshot()}")
                 result = self.get_sql_time(sql, query_name=query_name, config_id=config_id)
                 print(f"RESULT:{result}", flush=True)
@@ -148,30 +120,16 @@ class RunnerTemplate(ABC):
             except BaseException as e:
                 log_event(f"verify child exception {label}: {repr(e)}, {memory_snapshot()}")
                 result_queue.put(self.timeout * 1000.0)
-            finally:
-                try:
-                    self.dbms._disconnect()
-                    log_event(f"verify child disconnected {label}, {memory_snapshot()}")
-                except BaseException as e:
-                    log_event(f"verify child disconnect exception {label}: {repr(e)}, {memory_snapshot()}")
 
         p = multiprocessing.Process(target=task_wrapper, args=(sql,))
         log_event(f"start verify process {label}, timeout_seconds={timeout_seconds}, {memory_snapshot()}")
         p.start()
         log_event(f"verify process pid={p.pid} started {label}")
         p.join(timeout_seconds)
-        log_event(
-            f"verify process join returned {label}, "
-            f"pid={p.pid}, alive={p.is_alive()}, exitcode={p.exitcode}, {memory_snapshot()}"
-        )
         if p.is_alive():
             log_event(f"verify process timeout {label}, pid={p.pid}, terminate, {memory_snapshot()}")
             p.terminate()
-            p.join(10)
-            if p.is_alive():
-                log_event(f"verify process still alive {label}, pid={p.pid}, kill, {memory_snapshot()}")
-                p.kill()
-                p.join()
+            p.join() 
             return self.timeout * 1000.0
         else:
             if result_queue.empty():

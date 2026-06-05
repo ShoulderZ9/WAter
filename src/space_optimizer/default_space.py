@@ -220,8 +220,6 @@ class DefaultSpace:
 
         def task_wrapper():
             try:
-                self.dbms._disconnect()
-                self.dbms._connect()
                 log_event(f"workload child start round={self.round}, {memory_snapshot()}")
                 result = self.run_sqls()
                 log_event(f"workload child finish round={self.round}, result={result}, {memory_snapshot()}")
@@ -229,31 +227,17 @@ class DefaultSpace:
             except BaseException as e:
                 log_event(f"workload child exception round={self.round}: {repr(e)}, {memory_snapshot()}")
                 result_queue.put(self.timeout * 1000.0)
-            finally:
-                try:
-                    self.dbms._disconnect()
-                    log_event(f"workload child disconnected round={self.round}, {memory_snapshot()}")
-                except BaseException as e:
-                    log_event(f"workload child disconnect exception round={self.round}: {repr(e)}, {memory_snapshot()}")
 
         p = multiprocessing.Process(target=task_wrapper)
         log_event(f"start workload process round={self.round}, timeout_seconds={timeout_seconds}, {memory_snapshot()}")
         p.start()
         log_event(f"workload process pid={p.pid} started round={self.round}")
         p.join(timeout_seconds)
-        log_event(
-            f"workload process join returned round={self.round}, "
-            f"pid={p.pid}, alive={p.is_alive()}, exitcode={p.exitcode}, {memory_snapshot()}"
-        )
 
         if p.is_alive():
             log_event(f"workload process timeout round={self.round}, pid={p.pid}, terminate, {memory_snapshot()}")
             p.terminate()
-            p.join(10)
-            if p.is_alive():
-                log_event(f"workload process still alive round={self.round}, pid={p.pid}, kill, {memory_snapshot()}")
-                p.kill()
-                p.join()
+            p.join()
             if not result_queue.empty():
                 sql_exec_time = result_queue.get()
             else:
@@ -356,6 +340,7 @@ class DefaultSpace:
         print(f"Tuning round {self.round} ...")
         print(f"--- Restore the dbms to default configuration ---")
         dbms.reset_config()
+        dbms.reconfigure()
 
         for knob in self.target_knobs:
             try:

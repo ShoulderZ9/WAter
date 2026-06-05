@@ -43,8 +43,15 @@ def main():
         #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=707 | tee log 707",
         #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=708 | tee log 708",
 
+        # water+gptuner 完全体
+        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=714 | tee log714.txt",
+
+        # water+smac 完全体
+        #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=712 | tee log712.txt",
+
         # scoring ablation
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=749 | tee log749.txt",
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=760 | tee log760.txt",
+
     ]
 
     # PYTHONPATH=src python3 src/run/run.py
