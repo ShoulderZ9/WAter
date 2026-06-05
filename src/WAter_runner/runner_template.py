@@ -138,6 +138,8 @@ class RunnerTemplate(ABC):
 
         def task_wrapper(sql):
             try:
+                self.dbms._disconnect()
+                self.dbms._connect()
                 log_event(f"verify child start {label}, {memory_snapshot()}")
                 result = self.get_sql_time(sql, query_name=query_name, config_id=config_id)
                 print(f"RESULT:{result}", flush=True)
@@ -146,16 +148,30 @@ class RunnerTemplate(ABC):
             except BaseException as e:
                 log_event(f"verify child exception {label}: {repr(e)}, {memory_snapshot()}")
                 result_queue.put(self.timeout * 1000.0)
+            finally:
+                try:
+                    self.dbms._disconnect()
+                    log_event(f"verify child disconnected {label}, {memory_snapshot()}")
+                except BaseException as e:
+                    log_event(f"verify child disconnect exception {label}: {repr(e)}, {memory_snapshot()}")
 
         p = multiprocessing.Process(target=task_wrapper, args=(sql,))
         log_event(f"start verify process {label}, timeout_seconds={timeout_seconds}, {memory_snapshot()}")
         p.start()
         log_event(f"verify process pid={p.pid} started {label}")
         p.join(timeout_seconds)
+        log_event(
+            f"verify process join returned {label}, "
+            f"pid={p.pid}, alive={p.is_alive()}, exitcode={p.exitcode}, {memory_snapshot()}"
+        )
         if p.is_alive():
             log_event(f"verify process timeout {label}, pid={p.pid}, terminate, {memory_snapshot()}")
             p.terminate()
-            p.join() 
+            p.join(10)
+            if p.is_alive():
+                log_event(f"verify process still alive {label}, pid={p.pid}, kill, {memory_snapshot()}")
+                p.kill()
+                p.join()
             return self.timeout * 1000.0
         else:
             if result_queue.empty():

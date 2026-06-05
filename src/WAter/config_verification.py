@@ -1,4 +1,4 @@
-import time, random, json, numbers
+import time, random, json
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
@@ -92,7 +92,7 @@ class ConfigVerifier:
         for i in self.runner.success_run_last:
             if runhistory["data"][int(i)-1]["cost"] > threshold:
                 print(f"Exploration route eliminate round {i}")
-                del whole_score[i]
+                whole_score.pop(i, None)
         print(f"whole_score:{whole_score}")
         return whole_score
 
@@ -212,6 +212,9 @@ class ConfigVerifier:
         return X_known, X_unknown
 
     def set_similarity(self, X_known, X_unknown):
+        if X_known.empty:
+            return [0.0 for _ in range(X_unknown.shape[0])]
+
         min_values = X_known[self.runner.num_knobs].min()
         max_values = X_known[self.runner.num_knobs].max()
         sims = []
@@ -225,16 +228,18 @@ class ConfigVerifier:
         return sims
     
     def similarity_func(self, x1, x2, min_values, max_values):
-        n_features = len(x1)
+        n_features = len(self.runner.target_knobs)
         sum_dist = 0.0
 
-        for i in range(n_features):
-            if isinstance(x1[i], numbers.Number) and isinstance(x2[i], numbers.Number):  # Continuous variable
-                value_range = max_values[i] - min_values[i]
+        for knob in self.runner.target_knobs:
+            value_1 = x1[knob]
+            value_2 = x2[knob]
+            if knob in self.runner.num_knobs:
+                value_range = max_values[knob] - min_values[knob]
                 if value_range != 0:
-                    sum_dist += abs(x1[i] - x2[i]) / value_range
+                    sum_dist += abs(value_1 - value_2) / value_range
             else:  # Categorical variable
-                sum_dist += 0 if x1[i] == x2[i] else 1
+                sum_dist += 0 if value_1 == value_2 else 1
 
         return  n_features / (sum_dist + n_features)
     

@@ -10,10 +10,12 @@ if __name__ == '__main__':
         dbms.reset_config()
         time_dict = dict()
         for name, sql in whole_workload_queries.items():
+            print(f"[time_dict] start {name}", flush=True)
             start_time = time.time()
             dbms.exec_queries(sql)
             t = time.time() - start_time
             time_dict[name] = t
+            print(f"[time_dict] done {name}: {t:.3f}s", flush=True)
         with open(time_dict_path, 'w') as f:
             json.dump(time_dict, f, indent=4)
         return time_dict
