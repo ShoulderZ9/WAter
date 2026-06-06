@@ -1,6 +1,7 @@
 from dbms.dbms_template import DBMSTemplate
 import psycopg2
 import os
+import subprocess
 import time
 import json
 
@@ -53,6 +54,16 @@ class PgDBMS(DBMSTemplate):
         self.recover_dbms()
         self._connect()
         self.clear_config()
+
+    def recover_dbms(self):
+        """Recover PostgreSQL with a bounded recovery command."""
+        try:
+            recover_result = subprocess.run(f"sh {self.recover_script}", shell=True, timeout=120)
+            if recover_result.returncode != 0:
+                print(f"PostgreSQL recover command failed with return code {recover_result.returncode}", flush=True)
+        except subprocess.TimeoutExpired:
+            print("PostgreSQL recover command timed out.", flush=True)
+        print("DBMS recovered")
         
     def reconfigure(self):
         # return 1111
@@ -61,7 +72,16 @@ class PgDBMS(DBMSTemplate):
             The configuration could make the dbms crash, so that maybe we need recovery operation.
         """
         self._disconnect()
-        os.system(self.restart_cmd)
+        try:
+            restart_result = subprocess.run(self.restart_cmd, shell=True, timeout=120)
+            if restart_result.returncode != 0:
+                print(f"PostgreSQL restart command failed with return code {restart_result.returncode}", flush=True)
+                self.recover_dbms()
+                return False
+        except subprocess.TimeoutExpired:
+            print("PostgreSQL restart command timed out; trying recovery.", flush=True)
+            self.recover_dbms()
+            return False
         time.sleep(2)
         success = self._connect()
         if success:
@@ -155,7 +175,8 @@ class PgDBMS(DBMSTemplate):
         self.reset_config()
         self.reconfigure()
         # customized workload, only support latency
+        success = True
         for knob, value in configs.items():
-            self.set_knob(knob, value)
-        self.reconfigure()
+            success = self.set_knob(knob, value) and success
+        return self.reconfigure() and success
             
