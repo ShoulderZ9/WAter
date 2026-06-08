@@ -49,8 +49,8 @@ def main():
         # water+smac 完全体
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=712 | tee log712.txt",
 
-        # scoring ablation
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=760 | tee log760.txt",
+        # ∞
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=768 | tee log768.txt",
 
     ]
 
