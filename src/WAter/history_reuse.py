@@ -8,10 +8,7 @@ class HistoryReuser:
         for i in range(1, self.runner.round + 1):
             if str(i) in self.runner.single_dict["data"].keys() and not set(self.runner.cur_workload_queries.keys()).issubset(set(self.runner.single_dict["data"][str(i)].keys())):
                 configs = self.runner.single_dict["configs"][str(i)]
-                if not self.runner.dbms.set_config(configs):
-                    del self.runner.single_dict["data"][str(i)]
-                    print(f"Configuration {i} cannot restart and will be deleted from single.json")
-                    continue
+                self.runner.dbms.set_config(configs)
                 for name, sql in self.runner.cur_workload_queries.items():
                     if name not in self.runner.single_dict["data"][str(i)]:
                         print(f"Executing {name} on config {i}")

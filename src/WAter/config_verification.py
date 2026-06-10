@@ -238,13 +238,7 @@ class ConfigVerifier:
                 f"verify config={i} start, existing_queries={existing_queries}, "
                 f"config={compact_config(configs)}, {memory_snapshot()}"
             )
-            if not dbms.set_config(configs):
-                if str(i) in self.runner.single_dict["data"]:
-                    del self.runner.single_dict["data"][str(i)]
-                whole_to_remove.append(i)
-                print(f"Configuration {i} cannot restart and will be deleted from single.json", flush=True)
-                log_event(f"verify config={i} restart_failed/delete, {memory_snapshot()}")
-                continue
+            dbms.set_config(configs)
             log_event(f"verify config={i} dbms config applied, {memory_snapshot()}")
             for name, sql in self.runner.whole_workload_queries.items():
                 if name not in self.runner.single_dict["data"][str(i)]:
