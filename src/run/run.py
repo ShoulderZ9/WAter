@@ -44,13 +44,13 @@ def main():
         #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=708 | tee log 708",
 
         # water+gptuner 完全体
-        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=714 | tee log714.txt",
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=770 | tee log770.txt",
 
         # water+smac 完全体
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=712 | tee log712.txt",
 
         # ∞
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=768 | tee log768.txt",
+        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=768 | tee log768.txt",
 
     ]
 

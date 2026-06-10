@@ -62,7 +62,7 @@ class WorkloadCompressor:
     ##### 2. Code related to select new subset #####
     ################################################
     def select_queries(self):
-        beta = 0.2
+        beta = 0.1
         time_budget = self.runner.comp_ratio * sum(self.runner.time_dict.values())
         comp_keys = []
         whole_query_keys = list(self.runner.whole_workload_queries.keys())

@@ -38,6 +38,7 @@ class ConfigVerifier:
             print(f"whole_score:{whole_score}")
         else:
             # explore
+            threshold = self.runner.subset_default_score * 1.2 * 1000
             X_known, X_unknown = self.get_raw_X()
             sim_scores = self.set_similarity(X_known, X_unknown)
 
@@ -48,6 +49,10 @@ class ConfigVerifier:
             r = len(X_unknown)/(len(X_known) + len(X_unknown))
             whole_score = {idx:r*(1 - sim_score)+(1-r)*uncertainty_score for idx, sim_score, uncertainty_score in zip(self.runner.success_run_last, sim_scores, uncertainty_scores)}
             whole_score = {k:-v for k, v in whole_score.items()}
+            for i in self.runner.success_run_last:
+                if self.get_subset_cost(i) > threshold:
+                    print(f"Exploration route eliminate round {i}")
+                    whole_score.pop(i, None)
             print(f"whole_score:{whole_score}")
         
         self.runner.exec_whole_last = sorted(whole_score, key=whole_score.get)[:min(int(self.runner.success_per_stage * self.runner.verify_ratio), len(whole_score))]
