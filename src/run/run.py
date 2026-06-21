@@ -40,17 +40,20 @@ def main():
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=729 | tee log729.txt",
 
         # water+gptuner gsum/random
-        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=707 | tee log 707",
-        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=708 | tee log 708",
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=854 | tee log854.txt",
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=855 | tee log855.txt",
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=856 | tee log856.txt",
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=857 | tee log857.txt",
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=858 | tee log858.txt",
 
         # water+gptuner 完全体
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=770 | tee log770.txt",
+        #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=770 | tee log770.txt",
 
         # water+smac 完全体
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=712 | tee log712.txt",
 
         # vanilla gptuner
-        "PYTHONPATH=src python3 src/run/vanilla_tuner/run_gptuner.py -seed=829 | tee log829.txt",
+        #"PYTHONPATH=src python3 src/run/vanilla_tuner/run_gptuner.py -seed=829 | tee log829.txt",
 
         # ∞
         #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=768 | tee log768.txt",
