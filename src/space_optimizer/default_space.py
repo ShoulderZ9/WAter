@@ -47,11 +47,23 @@ class DefaultSpace:
             file.write(f"Round\tStart\tEnd\tBenchmark_Elapsed\tTuning_overhead\n")
 
     def _log(self, begin_time, end_time):
-        if self.round == 1:
+        if self.prev_end == 0:
             self.prev_end = begin_time
+        overhead = begin_time - self.prev_end
         with open(self.log_file, 'a') as file:
-            file.write(f"{self.round}\t{begin_time}\t{end_time}\t{end_time-begin_time}\t{begin_time-self.prev_end}\n")
+            file.write(f"{self.round}\t{begin_time}\t{end_time}\t{end_time-begin_time}\t{overhead}\n")
         self.prev_end = end_time
+
+    def _account_time(self, key, seconds, count_key=None, query_ms_key=None, query_ms=0.0):
+        runner = getattr(self, "time_accounting_runner", None)
+        if runner is not None:
+            runner.account_time(
+                key,
+                seconds,
+                count_key=count_key,
+                query_ms_key=query_ms_key,
+                query_ms=query_ms,
+            )
 
     def _transfer_unit(self, value):
         value = str(value)
@@ -339,6 +351,7 @@ class DefaultSpace:
         self.round += 1
         print(f"Tuning round {self.round} ...")
         print(f"--- Restore the dbms to default configuration ---")
+        deploy_start = time.time()
         dbms.reset_config()
         dbms.reconfigure()
 
@@ -353,13 +366,28 @@ class DefaultSpace:
                 value = config[knob]
             dbms.set_knob(knob, value)
             
-        if dbms.reconfigure():
+        reconfigure_success = dbms.reconfigure()
+        self._account_time(
+            "db_restart_deployment_overhead_s",
+            time.time() - deploy_start,
+            count_key="db_deployments",
+        )
+
+        if reconfigure_success:
             print("----- Executing workload on current configuration -----", flush=True)
             log_event(
                 f"round={self.round} executing workload, timeout={self.timeout}, "
                 f"config={compact_config(dbms.config)}, {memory_snapshot()}"
             )
+            workload_start = time.time()
             total_sql_exec_time = self.run_sql_with_timeout(self.timeout)
+            self._account_time(
+                "subset_tuning_execution_s",
+                time.time() - workload_start,
+                count_key="subset_tuning_configs",
+                query_ms_key="subset_tuning_execution_ms",
+                query_ms=total_sql_exec_time,
+            )
 
             return total_sql_exec_time
         else:

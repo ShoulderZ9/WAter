@@ -28,11 +28,16 @@ class RunnerGPTuner(RunnerTemplate):
                 self.subset_default_score += value
         print(f"self.subset_default_score：{self.subset_default_score}")
             
+        tuner_start = time.time()
         smac = self.cur_tuner.optimize(
             name = f"../optimization_results/{self.dbms.name}/coarse/", 
             trials_number=30, 
             initial_config_number=15)
+        self.account_time("tuner_overhead_s", time.time() - tuner_start)
+        block_start = time.time()
+        accounted_before = self.total_accounted_time()
         smac.optimize()
+        self.account_unclassified_block_as_tuner_overhead(block_start, accounted_before)
         self.round = self.cur_tuner.round
         time.sleep(10)
         self.update_single_dict()
@@ -48,7 +53,11 @@ class RunnerGPTuner(RunnerTemplate):
             self.exec_whole_last.append(str(16))
         print(f"self.exec_whole_last: {self.exec_whole_last}")
         self.exec_whole_idx.extend(self.exec_whole_last)
+        block_start = time.time()
+        accounted_before = self.total_accounted_time()
         self.verifier.exec_whole()
+        self.account_unclassified_block_as_tuner_overhead(block_start, accounted_before)
+        self.flush_time_accounting()
 
         #########################
         ##### 2. Fine Stage #####
@@ -64,6 +73,7 @@ class RunnerGPTuner(RunnerTemplate):
             if time.time() - self.start_time > self.tuning_budget_s:
                 print("tuning budget reached")
                 print(f"total time: {time.time() - self.start_time}")
+                self.flush_time_accounting()
                 return
             self.cur_stage += 1
 
@@ -90,9 +100,14 @@ class RunnerGPTuner(RunnerTemplate):
             ##### 2.3 Obtain a new subset and fill in missing history #####
             ###############################################################
             # 运行 GSUM / random 固定子集时注释第一行
+            # tuner_start = time.time()
             # self.cur_workload_queries = self.compressor.select_queries()
+            # self.account_time("tuner_overhead_s", time.time() - tuner_start)
             self.cur_tuner.workload_queries = self.cur_workload_queries
+            block_start = time.time()
+            accounted_before = self.total_accounted_time()
             self.history_reuser.exec_selected_on_history()
+            self.account_unclassified_block_as_tuner_overhead(block_start, accounted_before)
             # Get subset's performance on default configuration
             self.subset_default_score = 0
             for idx, value in self.time_dict.items():
@@ -107,15 +122,21 @@ class RunnerGPTuner(RunnerTemplate):
             stage_budget = self.success_per_stage
             # Set subset_default_score for WAter mode to initialize tuner with single data
             self.cur_tuner.subset_default_score = self.subset_default_score
+            tuner_start = time.time()
             smac = self.cur_tuner.optimize(
                 name = f"../optimization_results/{self.dbms.name}/fine/",
                 trials_number=2000) # history trials + new tirals
+            self.account_time("tuner_overhead_s", time.time() - tuner_start)
             while True:
+                tuner_start = time.time()
                 info = smac.ask()
+                self.account_time("tuner_overhead_s", time.time() - tuner_start)
                 st = time.time()
                 cost = self.cur_tuner.set_and_replay(config=info.config, seed=info.seed)
                 value = TrialValue(cost=cost, time=time.time()-st)
+                tuner_start = time.time()
                 smac.tell(info, value)
+                self.account_time("tuner_overhead_s", time.time() - tuner_start)
                 if cost != self.timeout * 1000:
                     stage_budget -= 1
                     self.success_run_last.append(str(self.cur_tuner.round))
@@ -128,6 +149,12 @@ class RunnerGPTuner(RunnerTemplate):
             #####################################################################
             ##### 2.5 Verify promising configurations on the whole workload #####
             #####################################################################
+            tuner_start = time.time()
             self.verifier.select_round_to_run()
+            self.account_time("tuner_overhead_s", time.time() - tuner_start)
+            block_start = time.time()
+            accounted_before = self.total_accounted_time()
             self.verifier.exec_whole()
+            self.account_unclassified_block_as_tuner_overhead(block_start, accounted_before)
+            self.flush_time_accounting()
             

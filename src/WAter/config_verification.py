@@ -238,7 +238,13 @@ class ConfigVerifier:
                 f"verify config={i} start, existing_queries={existing_queries}, "
                 f"config={compact_config(configs)}, {memory_snapshot()}"
             )
+            deploy_start = time.time()
             dbms.set_config(configs)
+            self.runner.account_time(
+                "db_restart_deployment_overhead_s",
+                time.time() - deploy_start,
+                count_key="db_deployments",
+            )
             log_event(f"verify config={i} dbms config applied, {memory_snapshot()}")
             for name, sql in self.runner.whole_workload_queries.items():
                 if name not in self.runner.single_dict["data"][str(i)]:
@@ -251,11 +257,19 @@ class ConfigVerifier:
                         f"verify config={i} query={name} start, "
                         f"current_cost_ms={current_cost:.3f}, timeout_seconds={timeout_seconds:.3f}, {memory_snapshot()}"
                     )
+                    query_start = time.time()
                     t = self.runner.get_sql_time_with_timeout(
                         sql,
                         timeout_seconds,
                         query_name=name,
                         config_id=i,
+                    )
+                    self.runner.account_time(
+                        "full_workload_verification_s",
+                        time.time() - query_start,
+                        count_key="full_workload_verification_queries",
+                        query_ms_key="full_workload_verification_ms",
+                        query_ms=t,
                     )
                     log_event(
                         f"verify config={i} query={name} result_ms={t:.3f}, "

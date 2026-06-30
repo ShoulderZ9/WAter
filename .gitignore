@@ -3,3 +3,4 @@
 /.venv
 **/__pycache__/
 /water_venv
+.DS_Store
