@@ -1,11 +1,11 @@
 #!/bin/sh
 set -eu
 
-PGDATA_DIR="${PGDATA:-/var/lib/postgresql/14/main}"
+PGDATA_DIR="${PGDATA:-/var/lib/postgresql/17/main}"
 POSTGRES_SERVICE_NAME="${POSTGRES_SERVICE_NAME:-postgresql}"
 POSTGRES_RESTART_CMD="${POSTGRES_RESTART_CMD:-}"
 PG_CTL_TIMEOUT="${PG_CTL_TIMEOUT:-60}"
-PG_CLUSTER_VERSION="${PG_CLUSTER_VERSION:-14}"
+PG_CLUSTER_VERSION="${PG_CLUSTER_VERSION:-17}"
 PG_CLUSTER_NAME="${PG_CLUSTER_NAME:-main}"
 
 restart_with_custom_cmd() {

@@ -171,7 +171,13 @@ class DefaultSpace:
         candidate_knobs = [line.strip() for line in lines]
         target_knobs = []
         for knob in candidate_knobs:
-            if "vartype" not in self.dbms.knob_info[knob] or self.dbms.knob_info[knob]["vartype"] == "string":
+            if not knob or knob.startswith("#"):
+                continue
+            info = self.dbms.knob_info.get(knob)
+            if info is None:
+                print(f"Skip knob '{knob}' because it is not available in current knob_info.")
+                continue
+            if "vartype" not in info or info["vartype"] == "string":
                 continue
             else:
                 target_knobs.append(knob)

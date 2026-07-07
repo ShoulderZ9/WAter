@@ -123,20 +123,25 @@ class RunnerTemplate(ABC):
             )
 
     def _build_time_accounting(self):
-        total_accounted_s = sum(self.time_accounting.values())
         elapsed_s = None
         if hasattr(self, "start_time"):
             elapsed_s = max(time.time() - self.start_time, 0.0)
 
+        accounting_times = dict(self.time_accounting)
+        total_accounted_s = sum(accounting_times.values())
+        if elapsed_s is not None:
+            residual_s = max(elapsed_s - total_accounted_s, 0.0)
+            accounting_times["tuner_overhead_s"] += residual_s
+            total_accounted_s += residual_s
+
         accounting = {
-            **self.time_accounting,
+            **accounting_times,
             "total_accounted_s": total_accounted_s,
             "counts": self.time_accounting_counts,
             "query_execution_ms": self.time_accounting_query_ms,
         }
         if elapsed_s is not None:
             accounting["elapsed_wall_time_s"] = elapsed_s
-            accounting["unaccounted_wall_time_s"] = max(elapsed_s - total_accounted_s, 0.0)
         return accounting
 
     def total_accounted_time(self):
@@ -165,8 +170,8 @@ class RunnerTemplate(ABC):
     def get_knob_type(self):
         num_knobs = []
         cat_knobs = []
-        for knob in self.target_knobs:
-            info = self.dbms.knob_info[knob]
+        for knob in list(self.target_knobs):
+            info = self.dbms.knob_info.get(knob)
             if info is None:
                 self.target_knobs.remove(knob)   # this knob is not by the DBMS under specific version
                 continue

@@ -19,9 +19,9 @@ class CoarseSpace(DefaultSpace):
 
 
     def define_search_space(self):
-        for knob in self.target_knobs:
+        for knob in list(self.target_knobs):
             print(knob)
-            info = self.dbms.knob_info[knob]
+            info = self.dbms.knob_info.get(knob)
             if info is None:
                 self.target_knobs.remove(knob) # this knob is not by the DBMS under specific version
                 continue
@@ -130,6 +130,8 @@ class CoarseSpace(DefaultSpace):
           
                 special_skill_path = f"./knowledge_collection/{self.dbms.name}/structured_knowledge/special/"
                 # check if this knob is special knob
+                special = False
+                special_value = None
                 if file_name in os.listdir(special_skill_path):
                     with open(os.path.join(special_skill_path, file_name), 'r') as json_file:
                         special_skill = json.load(json_file)
@@ -191,7 +193,7 @@ class CoarseSpace(DefaultSpace):
                         self.search_space.add_hyperparameter(normal_para)
                 
             else:
-                info = self.dbms.knob_info[knob]
+                info = self.dbms.knob_info.get(knob)
                 if info is None:
                     continue
                 knob = self.get_default_space(knob, info)

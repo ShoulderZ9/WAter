@@ -6,9 +6,44 @@ import json
 
 class PgDBMS(DBMSTemplate):
     """ Instantiate DBMSTemplate to support PostgreSQL DBMS """
-    def __init__(self, db, user, password, restart_cmd, recover_script, knob_info_path):
+    def __init__(
+        self,
+        db,
+        user,
+        password,
+        restart_cmd,
+        recover_script,
+        knob_info_path,
+        auto_refresh_knob_info=False,
+        knob_info_refresh_path=None,
+    ):
         super().__init__(db, user, password, restart_cmd, recover_script, knob_info_path)
         self.name = "postgres"
+        self.knob_info_path = knob_info_path
+        self.knob_info_refresh_path = knob_info_refresh_path or knob_info_path
+        if auto_refresh_knob_info:
+            self.refresh_knob_info()
+
+    @classmethod
+    def from_file(cls, config):
+        db = config['DATABASE']['db']
+        db_user = config['DATABASE']['user']
+        password = config['DATABASE']['password']
+        restart_cmd = config['DATABASE']['restart_cmd']
+        recover_script = config['DATABASE']['recover_script']
+        knob_info_path = config['DATABASE']['knob_info_path']
+        auto_refresh_knob_info = config['DATABASE'].getboolean('auto_refresh_knob_info', fallback=False)
+        knob_info_refresh_path = config['DATABASE'].get('knob_info_refresh_path', fallback=knob_info_path)
+        return cls(
+            db,
+            db_user,
+            password,
+            restart_cmd,
+            recover_script,
+            knob_info_path,
+            auto_refresh_knob_info=auto_refresh_knob_info,
+            knob_info_refresh_path=knob_info_refresh_path,
+        )
     
     def _connect(self, db=None):
         """ Establish connection to database, return success flag """
@@ -101,6 +136,16 @@ class PgDBMS(DBMSTemplate):
         with open(dest_path, "w") as json_file:
             json.dump(knob_info, json_file, indent=4, sort_keys=True)
         print(f"The knob info is written to {dest_path}")
+
+    def refresh_knob_info(self):
+        """Refresh knob metadata from the connected PostgreSQL instance."""
+        if self.connection is None:
+            if not self._connect():
+                print("Skip refreshing knob info because PostgreSQL is not reachable.")
+                return
+        os.makedirs(os.path.dirname(self.knob_info_refresh_path), exist_ok=True)
+        self.extract_knob_info(self.knob_info_refresh_path)
+        self.get_knob_info(self.knob_info_refresh_path)
 
     def update_dbms(self, sql):
         """ Execute sql query on dbms to update knob value and return success flag """

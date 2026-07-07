@@ -7,11 +7,14 @@ commit_siblings
 commit_delay
 join_collapse_limit
 from_collapse_limit
+enable_group_by_reordering
+enable_presorted_aggregate
 bgwriter_flush_after
 deadlock_timeout
 wal_sync_method
 bgwriter_lru_multiplier
 effective_io_concurrency
+io_combine_limit
 max_connections
 max_worker_processes
 max_parallel_workers_per_gather

@@ -47,7 +47,7 @@ def main():
         #"PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=858 | tee log858.txt",
 
         # water+gptuner 完全体
-        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=885 | tee log885.txt",
+        "PYTHONPATH=src python3 src/run/WAter/run_gptuner.py -seed=896 | tee log896.txt",
 
         # water+smac 完全体
         #"PYTHONPATH=src python3 src/run/WAter/run_smac.py -seed=712 | tee log712.txt",
